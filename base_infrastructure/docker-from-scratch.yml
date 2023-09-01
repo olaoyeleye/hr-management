@@ -1,0 +1,165 @@
+---
+- hosts: hrapp
+  become: yes
+  #become_user: root
+  become_method: sudo
+  
+  vars:
+    version: "2.46.0"
+
+  tasks:
+    - name: create a directory
+      file:
+        path: /home/ubuntu/workspace/hrapp/
+        state: directory
+ 
+        mode: 0755
+
+
+    - name: Install GIT
+      apt: 
+        name: git  
+      ignore_errors: yes 
+
+    - name: installing docker-ce dependences 
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: adding GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Adding docker repository to apt
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Installing docker
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Making sure docker is up and running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    #handlers:
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker $USER
+      
+    - name: restart docker
+      service: 
+        name: docker 
+        state: restarted
+
+
+
+    - name: Remove directory
+      file:
+        state: absent
+        path: /home/ubuntu/workspace
+      
+
+    
+    - name: Download hrapp from repo
+      ansible.builtin.git:
+        repo: https://github.com/techbleat/hrapp.git
+        dest: /home/ubuntu/workspace/hrapp
+        force: true
+        clone: yes
+        update: yes
+        single_branch: yes
+        version: main
+
+    - name: change directory
+      shell:
+        cmd: ls
+        chdir: /home/ubuntu/workspace/hrapp
+      
+
+    - name: list content of pwd
+      command: ls -ltr /home/ubuntu/workspace/hrapp
+
+
+    - name: stop container if exist and running
+      command: docker stop hrapp
+      ignore_errors: yes
+
+    - name: remove hrapp folder and its content if exists
+      command: sudo rm -r hrapp
+      ignore_errors: yes
+
+    - name: Remove the container if exist and has been stopped by the previous module
+      command: docker rm hrapp
+      ignore_errors: yes 
+
+    - name: Remove the image if exist , just to do a clean up before installation
+      command: docker rmi hrapp
+      ignore_errors: yes
+
+
+    - name: Build the Dockerfile into a docker image
+      command: sudo docker build -t hrappkensko .   #\home\ubuntu\workspace\hrapp\.
+    #- name: Build image and with build args
+    #  community.docker.docker_image:
+    #    name: hrapp:v1
+    #    build:
+    #      path: /home/ubuntu/workspace/hrapp/.
+    #      source: build
+     #   state: present
+
+
+    - name: Log into DockerHub using a custom config file
+      docker_login:
+        username: "{{username}}"
+        password: "{{password}}" 
+
+
+    - name: Pull an image
+      community.docker.docker_image:
+        name: japostina/hrapp
+        source: pull
+       # Select platform for pulling. If not specified, will pull whatever docker prefers.
+        pull:
+          platform: v1
+
+   
+
+    - name: Building Remove the image if exist , just to do a clean up before installation
+      command: docker rmi hrapp:v1
+      ignore_errors: yes
+
+     
+     
+    - name: Log out of DockerHub
+      docker_login:
+        state: absent
+
+
+
+
+    - name: building docker container image out of the docker image that has been built from the previous module
+      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=project -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_ACCESS_NAME=AKIA2IKYRSF72XQYRARX -e AWS_KEY_NAME=eAlvdD1YmjohDrrAZWbHKDHqgOQHCljyls55hMFR
+      
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+---
+- hosts: hrapp
+  become: yes
+  become_user: root
+  become_method: sudo
+  
+  vars:
+    version: "2.46.0"
+
+  tasks:
+    - name: create a directory
+      file:
+        path: "workspace"
+        state: directory
+        owner: "{{userId}}"
+        group: "{{groupId}}"
+        mode: 0755
+
+    - name: Creates directory
+      file:
+        path: "/data/prometheus/"
+        state: directory
+        owner: "{{userId}}"
+        group: "{{groupId}}"
+        mode: 0755
+
+
+    - name: Install GIT
+      command: sudo apt install git -y && sudo apt update -y 
+        ignore_errors: yes
+
+     - name: stop container if exist and running
+      command: docker stop hrapp.v1 
+        ignore_errors: yes
+
+
+    - name: Remove the container if exist and has been stopped by the previous module
+      command: docker rm hrapp.v1
+        ignore_errors: yes 
+
+    - name: Remove the image if exist , just to do a clean up before installation
+      command: docker rmi hrapp.v1
+        ignore_errors: yes
+
+
+    - name: Download docker image from my docker epository
+      command: 
+        args:
+          chdir: /hrapp
+
+
+        
+    - name: Download docker image from my docker epository
+      command:
+        path: 
+
+
+
+
+
+    - name: building docker container image out of the docker image that has been downloaded
+      ansible.builtin.command: docker run docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=project -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1
+-e AWS_ACCESS_NAME=AKIA2IKYRSF72XQYRARX
+-e AWS_KEY_NAME=eAlvdD1YmjohDrrAZWbHKDHqgOQHCljyls55hMFR
+
+
+
