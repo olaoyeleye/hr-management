@@ -37,5 +37,5 @@ resource "aws_db_subnet_group" "postgresdb-subnet" {
   tags = {
     Name = "postgresdb-subnet"
   }
-  
-  }
+
+}

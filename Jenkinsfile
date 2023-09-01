@@ -39,6 +39,7 @@ pipeline {
                 
                 '''
             }
+        }
         stage ("stage 4"){
             steps {
                 echo "This is stage four where we connect to git to download hrapp"
@@ -48,6 +49,7 @@ pipeline {
                 git clone https://github.com/techbleat/hrapp
                 '''
             }
+        }
         stage ("stage 5"){
             steps {
                 echo "This is stage five where we we try to build the Dockerfile"
@@ -58,6 +60,7 @@ pipeline {
                 
                 '''
             }
+        }
         stage ("stage 6"){
             steps {
                 echo "This is stage six where we push the image into docker  hub"

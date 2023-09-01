@@ -1,11 +1,11 @@
 
 resource "aws_instance" "hr-app-1" {
-  ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.subnet_1_public.id
+  ami                         = var.ami
+  key_name                    = var.key_name
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.subnet_1_public.id
   associate_public_ip_address = true
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  vpc_security_group_ids      = [aws_security_group.hr-app-sg.id]
   tags = {
     Name = var.hr-app-name-1
   }
@@ -13,12 +13,12 @@ vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
 
 
 resource "aws_instance" "hr-app-2" {
-  ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.subnet_1_public.id
-associate_public_ip_address = true
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  ami                         = var.ami
+  key_name                    = var.key_name
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.subnet_1_public.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.hr-app-sg.id]
 
   tags = {
     Name = var.hr-app-name-2
@@ -27,12 +27,12 @@ vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
 
 
 resource "aws_instance" "hr-app-3" {
-  ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.subnet_2_public.id
-associate_public_ip_address = true
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  ami                         = var.ami
+  key_name                    = var.key_name
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.subnet_2_public.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.hr-app-sg.id]
 
   tags = {
     Name = var.hr-app-name-3
@@ -40,12 +40,12 @@ vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
 }
 
 resource "aws_instance" "hr-app-4" {
-  ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.subnet_2_public.id
-associate_public_ip_address = true
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  ami                         = var.ami
+  key_name                    = var.key_name
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.subnet_2_public.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.hr-app-sg.id]
 
   tags = {
     Name = var.hr-app-name-4
@@ -74,12 +74,12 @@ EOF
 
 
 resource "aws_instance" "hr-app-jump-server" {
-  ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.subnet_2_public.id
-associate_public_ip_address = true
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  ami                         = var.ami
+  key_name                    = var.key_name
+  instance_type               = "t2.micro"
+  subnet_id                   = aws_subnet.subnet_2_public.id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.hr-app-sg.id]
 
   tags = {
     Name = var.hr-app-jump-server
@@ -113,13 +113,13 @@ EOF
 
 
 resource "aws_instance" "hr-app-5" {
-   ami           = var.ami
-  key_name      = var.key_name
-  instance_type = "t2.micro"
-   subnet_id = aws_subnet.subnet_3_private.id 
-vpc_security_group_ids =[aws_security_group.hr-app-sg.id]
+  ami                    = var.ami
+  key_name               = var.key_name
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.subnet_3_private.id
+  vpc_security_group_ids = [aws_security_group.hr-app-sg.id]
 
-   tags = {
-     Name =var.hr-app-name-5
-   }
- }
+  tags = {
+    Name = var.hr-app-name-5
+  }
+}
