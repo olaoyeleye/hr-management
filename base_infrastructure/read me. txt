@@ -1,0 +1,7 @@
+mkdir ansible_home/host_vars
+mkdir ansible_home/group_vars
+
+creste files in group_vars
+db ====> node: data_base
+app ===> node: application
+zeus ====> node: monitoring

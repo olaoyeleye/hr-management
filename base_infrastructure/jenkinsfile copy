@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    environment {
+        AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
+    }
+    parameters{
+        choice(name:'AWS_ENV', description:'Please select the implementation stage', choices:'dev\nsit')
+    }
+    stages {
+        stage ("stage 1"){
+            steps {
+                echo "This is stage one, where we download base infrastructure"
+                sh '''
+                   mkdir jenkins
+                   cd jenkins
+                   git clone https://github.com/olaoyeleye/project-5.git
+                   '''
+            }
+        }
+        stage ("stateg 2"){
+            steps {
+                echo "This is stage two, where we we apply terraform"
+                sh '''
+                cd jenkins
+                cd project-5
+                cd base_infrastructure
+                terraform init --backend-config=../env/"${AWS_ENV}"/backend.tfvars
+                
+                '''
+            }
+        }
+        stage ("stage 3"){
+            steps {
+                echo "This is stage three where we use terraform apply"
+                sh '''
+                cd jenkins
+                cd project-5
+                cd base_infrastructure
+                terraform apply -var-file ../env/"${AWS_ENV}"/backend.tfvars -var-file ../env/"${AWS_ENV}"/ec2.tfvars --auto-approve
+                
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Job done'
+            deleteDir()
+        }
+        success {
+            echo 'Build is successful'
+        }
+        failure {
+            echo 'This has failed'
+        }
+    }
+    
+}
