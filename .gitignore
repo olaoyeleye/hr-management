@@ -1,0 +1,8 @@
+
+*.pem
+ec2.tfvars
+ansible_variables.yml
+.terraform/
+.terraform.lock.hcl
+*.hcl
+git rm --cached *
