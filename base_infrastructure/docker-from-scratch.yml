@@ -155,7 +155,7 @@
 
 
     - name: building docker container image out of the docker image that has been built from the previous module
-      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=project -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_ACCESS_NAME=AKIA2IKYRSF72XQYRARX -e AWS_KEY_NAME=eAlvdD1YmjohDrrAZWbHKDHqgOQHCljyls55hMFR
+      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST="{{POSTGRES_HOST }}" -e POSTGRES_USER="{{POSTGRES_USER }}" -e POSTGRES_DATABASE_NAME="{{ POSTGRES_DATABASE_NAME}}" -e POSTGRES_PASSWORD="{{ POSTGRES_PASSWORD}}" -e TO_ADDRESS="{{TO_ADDRESS }}" -e SOURCE_ADDRESS="{{SOURCE_ADDRESS }}" -e AWS_REGION_NAME="{{AWS_REGION_NAME }}" -e AWS_ACCESS_NAME="{{ AWS_ACCESS_NAME}}" -e AWS_KEY_NAME="{{ AWS_KEY_NAME}}"
       
 
 
