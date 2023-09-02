@@ -75,6 +75,7 @@ EOF
 
 resource "aws_instance" "hr-app-jump-server" {
   ami                         = var.ami
+  count=0
   key_name                    = var.key_name
   instance_type               = "t3.medium"
   subnet_id                   = aws_subnet.subnet_2_public.id

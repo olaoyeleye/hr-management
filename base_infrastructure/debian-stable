@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<!-- Do not manually edit this file, it is generated from https://github.com/jenkinsci/packaging/blob/master/templates/base.html -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    
+    <title>Debian Jenkins Packages</title>
+    
+
+    <link href='https://www.jenkins.io/sites/default/files/jenkins_favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous">
+
+    <script
+	  src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"
+	  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	  crossorigin="anonymous"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"></script>
+
+    <style type="text/css">
+      dl {
+        padding: 0;
+      }
+
+      dl dt {
+        padding: 0;
+        margin-top: 1em;
+        font-size: 1em;
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      dl dd {
+        padding: 0 1em;
+        margin-bottom: 1em;
+      }
+    </style>
+
+</head>
+
+<body style="min-height:100%; height:100%; padding-top:100px">
+<script src="https://cdn.jsdelivr.net/npm/lit@2.7.6/polyfill-support.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.8.0/webcomponents-loader.js"></script>
+<script data="jio" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/+esm" type="module"></script>
+<script data="jio" nomodule="" src="https://cdn.jsdelivr.net/npm/@jenkinsci/jenkins-io-components/"></script>
+  <div class="fixed-top">
+    <jio-navbar class="fixed-top" property="https://get.jenkins.io"/>
+  </div>
+
+  <div class='container'>
+    <div class='row'>
+      <div class="col-md-12">
+        <div class="main">
+          <h1>Jenkins Debian Packages</h1>
+
+          
+
+<p>
+  This is the Debian package repository of Jenkins to automate installation and upgrade.
+
+  To use this repository, first add the key to your system:
+
+  <pre class="text-white bg-dark">
+    <code>
+  curl -fsSL <a href="https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key" style="color:white">https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key</a> | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null</code>
+  </pre>
+
+  Then add a Jenkins apt repository entry:
+
+  <pre class="text-white bg-dark">
+    <code>
+  echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null</code>
+  </pre>
+</p>
+
+<p>
+Update your local package index, then finally install Jenkins:
+
+  <pre class="text-white bg-dark">
+   <code>
+  sudo apt-get update
+  sudo apt-get install fontconfig openjdk-11-jre
+  sudo apt-get install jenkins
+   </code>
+  </pre>
+</p>
+
+<p>
+The apt packages were signed using this key:
+</p>
+
+<pre class="text-white bg-dark" style="box-sizing:border-box; padding:1.5rem 1rem;">pub   rsa4096 2023-03-27 [SC] [expires: 2026-03-26]
+      63667EE74BBA1F0A08A698725BA31D57EF5975CA
+uid                      Jenkins Project <jenkinsci-board@googlegroups.com>
+sub   rsa4096 2023-03-27 [E] [expires: 2026-03-26]</pre>
+
+
+          
+            <p>
+              You will need to explicitly install a supported Java runtime environment (JRE), either from your distribution
+              (as described above) or another Java vendor (e.g., <a href="https://adoptium.net/">Adoptium</a>).
+            </p>
+
+            <h2>
+              Weekly Release Line
+            </h2>
+
+            <p>
+              Supported Java versions for the weekly release line are:
+            </p>
+
+            <dl>
+              <dt>2.357 (June 2022) and newer</dt>
+              <dd>Java 11 or Java 17</dd>
+
+              <dt>2.164 (February 2019) and newer</dt>
+              <dd>Java 8 or Java 11</dd>
+
+              <dt>2.54 (April 2017) and newer</dt>
+              <dd>Java 8</dd>
+
+              <dt>1.612 (May 2015) and newer</dt>
+              <dd>Java 7</dd>
+            </dl>
+
+            <h2>
+              <a href="https://www.jenkins.io/download/lts/">Long Term Support (LTS)</a> Release Line
+            </h2>
+
+            <p>
+              Supported Java versions for the LTS release line are:
+            </p>
+
+            <dl>
+              <dt>2.361.1 (September 2022) and newer</dt>
+              <dd>Java 11 or Java 17</dd>
+
+              <dt>2.346.1 (June 2022) and newer</dt>
+              <dd>Java 8, Java 11, or Java 17</dd>
+
+              <dt>2.164.1 (March 2019) and newer</dt>
+              <dd>Java 8 or Java 11</dd>
+
+              <dt>2.60.1 (June 2017) and newer</dt>
+              <dd>Java 8</dd>
+
+              <dt>1.625.1 (October 2015) and newer</dt>
+              <dd>Java 7</dd>
+            </dl>
+          
+
+          <p>
+            See <a href="https://www.jenkins.io/doc/book/installing/">the installation guide</a> for more information, including how Jenkins is run and where the configuration is stored, etc.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function() {
+      $('.hostname').html($(location).attr('origin'));
+    });
+  </script>
+  <div class='container' style="min-height:100%; height:100%; padding-top:50px; padding-bottom:50px">
+    <div class='row'>
+      <div class="col-md-12">
+        <div class="card">
+
+  <!-- End of this html document is located in FOOTER.html -->
+<!-- Beginning of this html document is located in HEADER.html -->
+      </div>
+    </div>
+  </div>
+</div>
+<jio-footer id="footer" property="https://get.jenkins.io"/>
+
+</body>
+
+</html>
+
+<!--
+  This html files have been test with Apache fancy directory
+
+DocumentRoot "/usr/local/apache2/htdocs"
+<Directory "/usr/local/apache2/htdocs">
+    Options Indexes FollowSymLinks
+    AllowOverride FileInfo
+    Require all granted
+
+    IndexOptions FancyIndexing VersionSort TrackModified FoldersFirst SuppressHTMLPreamble NameWidth=* SuppressRules SuppressIcon SuppressDescription
+
+    HeaderName HEADER.html
+    ReadmeName FOOTER.html
+
+    IndexIgnore HEADER* FOOTER* index.html
+
+</Directory>
+
+
+-->
