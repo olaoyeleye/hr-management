@@ -1,45 +1,104 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_ACCESS_KEY_ID=credentials('id')
+        AWS_SECRET_ACCESS_KEY=credentials('key')
+        DOCKERHUB_CREDENTIALS_USER=credentials('USER')
+        DOCKERHUB_CREDENTIALS_PSW=credentials('PASSWORD')
+        DOCKER_REGISTRY=credentials('DOCKER_REGISTRY')
+        
     }
-    parameters{
-        choice(name:'AWS_ENV', description:'Please select the implementation stage', choices:'dev\nsit')
-    }
+//docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW
     stages {
+       
         stage ("stage 1"){
             steps {
-                echo "This is stage one, where we download base infrastructure"
+                echo "This is stage one, where we download base_infrastructure from git"
                 sh '''
                    mkdir jenkins
                    cd jenkins
-                   git clone https://github.com/olaoyeleye/project-5.git
+                   git clone https://github.com/olaoyeleye/hr-management.git
                    '''
             }
         }
-        stage ("stateg 2"){
+        stage ("stage 2"){
             steps {
-                echo "This is stage two, where we we apply terraform"
+                echo "This is stage 2, where we do terraform init"
                 sh '''
-                cd jenkins
-                cd project-5
-                cd base_infrastructure
-                terraform init --backend-config=../env/"${AWS_ENV}"/backend.tfvars
-                
-                '''
+                   cd jenkins
+                   cd hr-management
+                   cd base_infrastructure
+                   terraform init --backend-config=../env/dev/backend.tfvars           
+                  
+                   '''
             }
         }
         stage ("stage 3"){
             steps {
-                echo "This is stage three where we use terraform apply"
+                echo "This is stage 3, where we do terraform destroy"
                 sh '''
-                cd jenkins
-                cd project-5
-                cd base_infrastructure
-                terraform apply -var-file ../env/"${AWS_ENV}"/backend.tfvars -var-file ../env/"${AWS_ENV}"/ec2.tfvars --auto-approve
-                
-                '''
+                   cd jenkins
+                   cd hr-management
+                   cd base_infrastructure
+                   terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+                  
+                   '''
+            }
+        }
+        stage ("stage 33"){
+            steps {
+                echo "This is stage 33, where we do hrapp download"
+                sh '''
+                   cd jenkins
+                   cd hr-management 
+                   git clone https://github.com/techbleat/hrapp           
+                  
+                   '''
+            }
+        }
+        stage ("stage 4"){
+            steps {
+                echo "This is stage 4, where we do docker build"
+                sh '''
+                   cd jenkins
+                   cd hr-management
+                   cd hrapp
+                   docker build -t hrapp .           
+                  
+                   '''
+            }
+        }
+        stage ("stage 0 - Dockerhub login"){
+            steps {
+                echo "This is stage zero, where i log in into dockerhub account"
+                sh '''
+             - echo DOCKERHUB_CREDENTIALS_PSW | docker login --username $DOCKERHUB_CREDENTIALS_USER --password-stdin
+                   '''
+            }
+        }
+        
+        stage ("stage 5"){
+            steps {
+                echo "This is stage 5, where we do docker image tag"
+                sh '''
+                   cd jenkins
+                   cd hr-management
+                   cd hrapp
+                   docker tag hrapp japostina/hrapp          
+                  
+                   '''
+            }
+        }
+        stage ("stage 6"){
+            steps {
+                echo "This is stage 6, where we do docker push"
+                sh '''
+                   cd jenkins
+                   cd hr-management
+                   cd hrapp
+                   docker push japostina/hrapp:v1         
+                  
+                   '''
             }
         }
     }
@@ -57,3 +116,5 @@ pipeline {
     }
     
 }
+      
+      

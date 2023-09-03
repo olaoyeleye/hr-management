@@ -74,19 +74,7 @@
       file:
         state: absent
         path: /home/ubuntu/workspace
-      
-
-    
-    - name: Download hrapp from repo
-      ansible.builtin.git:
-        repo: https://github.com/techbleat/hrapp.git
-        dest: /home/ubuntu/workspace/hrapp
-        force: true
-        clone: yes
-        update: yes
-        single_branch: yes
-        version: main
-
+ 
     - name: change directory
       shell:
         cmd: ls
@@ -114,23 +102,12 @@
       ignore_errors: yes
 
 
-    - name: Build the Dockerfile into a docker image
-      command: sudo docker build -t hrappkensko .   #\home\ubuntu\workspace\hrapp\.
-    #- name: Build image and with build args
-    #  community.docker.docker_image:
-    #    name: hrapp:v1
-    #    build:
-    #      path: /home/ubuntu/workspace/hrapp/.
-    #      source: build
-     #   state: present
-
-
     - name: Log into DockerHub using a custom config file
       docker_login:
         username: "{{username}}"
         password: "{{password}}" 
 
-
+        
     - name: Pull an image
       community.docker.docker_image:
         name: japostina/hrapp
