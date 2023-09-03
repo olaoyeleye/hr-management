@@ -1,0 +1,81 @@
+---
+- hosts: hrapp
+  become: yes
+  #become_user: root
+  become_method: sudo
+  
+  vars:
+    version: "2.46.0"
+
+  tasks:
+    - name: create a directory
+      file:
+        path: /home/ubuntu/workspace/hrapp/
+        state: directory
+ 
+        mode: 0755
+
+
+    - name: Install GIT
+      apt: 
+        name: git  
+      ignore_errors: yes 
+
+    - name: installing docker-ce dependences 
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: adding GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Adding docker repository to apt
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Installing docker
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Making sure docker is up and running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    #handlers:
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker $USER
+      
+    - name: restart docker
+      service: 
+        name: docker 
+        state: restarted
+
+
+
+
+     
+
+
+
+
+
+
+
