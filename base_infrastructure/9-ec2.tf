@@ -75,7 +75,7 @@ EOF
 
 resource "aws_instance" "hr-app-jump-server" {
   ami                         = var.ami
-  count=0
+  count=1
   key_name                    = var.key_name
   instance_type               = "t3.medium"
   subnet_id                   = aws_subnet.subnet_2_public.id
@@ -130,6 +130,8 @@ sudo apt install jenkins -y
 sudo systemctl enable --now jenkins
 sudo ufw allow 8080
 sudo ufw enable
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
 
 EOF
 }

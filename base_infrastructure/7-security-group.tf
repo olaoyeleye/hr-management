@@ -4,7 +4,7 @@ resource "aws_security_group" "hr-app-sg" {
   vpc_id      = aws_vpc.hr-app-vpc.id
 
   ingress {
-    description = "TLS from VPC"
+    description = "TLS from SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -12,7 +12,7 @@ resource "aws_security_group" "hr-app-sg" {
   }
 
   ingress {
-    description = "TLS from VPC"
+    description = "TLS from postgressDB"
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
@@ -20,14 +20,14 @@ resource "aws_security_group" "hr-app-sg" {
   }
 
   ingress {
-    description = "TLS from VPC"
+    description = "TLS from HTTPS"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.hr-app-vpc.cidr_block]
   }
   ingress {
-    description = "TLS from VPC"
+    description = "TLS from HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"

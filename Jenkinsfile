@@ -119,6 +119,8 @@ pipeline {
                   ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
                   
                    '''
+                   /                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
+                  
             }
         }
     }
