@@ -35,12 +35,12 @@ pipeline {
         }
         stage ("stage 3 - Terraform apply - infrastructure creation"){
             steps {
-                echo "This is stage 3, where we do terraform destroy"
+                echo "This is stage 3, where we do terraform apply"
                 sh '''
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                   terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+                   terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
                   
                    '''
             }
@@ -100,6 +100,13 @@ pipeline {
                    docker push japostina/hrapp:v1         
                   
                    '''
+            }
+        } 
+        stage ("stage 8a - pwd"){
+            steps {
+                echo "checker"
+                sh ''' pwd
+                '''
             }
         }
         stage ("stage 9 - Ansible to run hrapp on remote nodes"){
