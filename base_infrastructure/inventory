@@ -7,7 +7,6 @@
 [zeus]
 54.247.37.24
 
-
 ## this is where i am installing postgresDB
 [db]
 10.0.5.110
