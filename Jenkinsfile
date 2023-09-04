@@ -6,6 +6,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS_USER=credentials('USER')
         DOCKERHUB_CREDENTIALS_PSW=credentials('PASSWORD')
         DOCKER_REGISTRY=credentials('DOCKER_REGISTRY')
+        hr_management_key=credentials('hr_management_key')
         
     }
 //docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW
