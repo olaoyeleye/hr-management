@@ -75,6 +75,7 @@ EOF
 
 resource "aws_instance" "hr-app-jump-server" {
   ami                         = var.ami
+ count=0
   key_name                    = var.key_name
   instance_type               = "t3.medium"
   subnet_id                   = aws_subnet.subnet_2_public.id
@@ -86,6 +87,9 @@ resource "aws_instance" "hr-app-jump-server" {
   }
   user_data = <<EOF
 #!/bin/bash
+cd /home/ubuntu
+sh ./all.sh
+
 sudo apt update -y
 sudo apt install software-properties-common -y
 sudo apt-add-repository --yes --update ppa:ansible/ansible
