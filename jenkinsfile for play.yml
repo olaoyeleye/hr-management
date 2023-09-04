@@ -109,32 +109,18 @@ pipeline {
                 '''
             }
         }
-        stage ("stage 9 - install dorcker on all the nodes"){
+        stage ("stage 9 - Ansible to run hrapp on remote nodes"){
             steps {
-                echo "This is stage 9, install dorcker on all the target nodes"
+                echo "This is stage 9, where we create hrapp container"
                 sh '''
                   cd jenkins
                   cd hr-management
                   cd base_infrastructure
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-installation.yml -u ubuntu
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
                    '''
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
                  
-            }
-        }
-        stage ("stage 10 - Ansible to run hrapp on remote nodes"){
-            steps {
-                echo "This is stage 10, where we create hrapp container"
-                sh '''
-                  cd jenkins
-                  cd hr-management
-                  cd base_infrastructure
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-from-scratch.yml -u ubuntu
-                  
-                   '''
-                   // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
-                  
             }
         }
     }
