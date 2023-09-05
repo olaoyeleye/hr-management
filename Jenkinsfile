@@ -138,18 +138,18 @@ pipeline {
                   cd hr-management
                   cd base_infrastructure
          
-                    echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
-                    cat tmpp
-                    echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
-                    cat tmpp2
-                    
-                  cat $inventory
+
                   echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --extra-var @AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -u ubuntu
                   ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --extra-var @AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY  -u ubuntu
 
                    '''
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
-                  
+                                      echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
+                  //  cat tmpp
+                   // echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
+                   // cat tmpp2
+                    
+                  //cat $inventory
             }
         }
     }
