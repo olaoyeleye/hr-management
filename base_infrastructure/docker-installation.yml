@@ -64,7 +64,7 @@
       command: usermod -aG docker $USER
 
       
-    
+
     - name: restart docker
       service: 
         name: docker 
