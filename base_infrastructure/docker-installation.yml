@@ -62,7 +62,17 @@
   
     - name: Add docker user to a super user
       command: usermod -aG docker $USER
+
+        
+    - name: Add docker user to a super user
+      command: usermod -aG docker ansible
+
+        
+    - name: Add docker user to a super user
+      command: usermod usermod -aG docker jenkins
+
       
+    
     - name: restart docker
       service: 
         name: docker 
