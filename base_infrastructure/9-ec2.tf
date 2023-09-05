@@ -85,11 +85,12 @@ resource "aws_instance" "hr-app-jump-server" {
   tags = {
     Name = var.hr-app-jump-server
   }
+
   user_data = <<EOF
 #!/bin/bash
-cd /home/ubuntu
-sh ./all.sh
 
+#  cd /home/ubuntu
+#  sh ./all.sh
 sudo apt update -y
 sudo apt install software-properties-common -y
 sudo apt-add-repository --yes --update ppa:ansible/ansible
