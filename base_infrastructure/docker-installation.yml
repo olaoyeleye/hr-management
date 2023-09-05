@@ -69,7 +69,7 @@
 
         
     - name: Add docker user to a super user
-      command: usermod usermod -aG docker jenkins
+      command: usermod -aG docker jenkins
 
       
     
