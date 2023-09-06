@@ -8,7 +8,7 @@ resource "aws_lb_target_group" "tg-all" {
   }
   # Alter the destination of the health check to be the login page.
   health_check {
-    path = "/About"
+    path = "/"
     port = 80
   }
 }
