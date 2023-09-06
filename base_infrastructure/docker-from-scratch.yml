@@ -41,10 +41,10 @@
       ignore_errors: yes
 
 
-    - name: Log into DockerHub using a custom config file
-      docker_login:
-        username: "{{username}}"
-        password: "{{password}}" 
+    #- name: Log into DockerHub using a custom config file
+    #  docker_login:
+    #    username: "{{username}}"
+     #   password: "{{password}}" 
 
         
     - name: Pull an image
@@ -63,9 +63,9 @@
 
      
      
-    - name: Log out of DockerHub
-      docker_login:
-        state: absent
+    #- name: Log out of DockerHub
+    #  docker_login:
+     #   state: absent
 
 
     - name: building docker container image out of the docker image that has been built from the previous module
