@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "hrapp-route53" {
-  name = "hrapp-kensko.com"
+  name = "kensko.com"
     vpc {
     vpc_id = aws_vpc.hr-app-vpc.id
   }
@@ -9,13 +9,24 @@ resource "aws_route53_zone" "hrapp-route53" {
 
 resource "aws_route53_record" "hrapp-ns" {
   zone_id = aws_route53_zone.hrapp-route53.zone_id
-  name    = "dev.hrapp-kensko.com"
-  type    = "NS"
-  ttl     = "30"
-  records = aws_route53_zone.hrapp-route53.name_servers
+  name    = "hrapp-1.kensko.com"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_instance.hr-app-1.public_ip]
 }
 
-#resource "aws_route53_zone_association" "secondary" {
- # zone_id = aws_route53_zone.hrapp-route53.zone_id
- # vpc_id  = aws_vpc.hr-app-vpc.id
-#}
+resource "aws_route53_record" "hrapp-ns" {
+  zone_id = aws_route53_zone.hrapp-route53.zone_id
+  name    = "hrapp-2.kensko.com"
+  type    = "NS"
+  ttl     = "30"
+  records = [aws_instance.hr-app-2.public_ip]
+}
+
+resource "aws_route53_record" "hrapp-ns" {
+  zone_id = aws_route53_zone.hrapp-route53.zone_id
+  name    = "hrapp-3.kensko.com"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_instance.hr-app-3.public_ip]
+}
