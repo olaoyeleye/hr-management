@@ -47,7 +47,7 @@ resource "aws_route53_health_check" "hrapp-health-check" {
 }
 
 
-resource "aws_route53_zone_association" "hrapp-zone-association" {
-  zone_id = aws_route53_zone.hrapp-route53.zone_id
-  vpc_id  = aws_vpc.hr-app-vpc.id
-}
+#resource "aws_route53_zone_association" "hrapp-zone-association" {
+#  zone_id = aws_route53_zone.hrapp-route53.zone_id
+#  vpc_id  = aws_vpc.hr-app-vpc.id
+#}
