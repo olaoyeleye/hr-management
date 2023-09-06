@@ -18,8 +18,8 @@ resource "aws_route53_record" "hrapp-ns-1" {
 resource "aws_route53_record" "hrapp-ns-2" {
   zone_id = aws_route53_zone.hrapp-route53.zone_id
   name    = "hrapp-2.kensko.com"
-  type    = "NS"
-  ttl     = "30"
+  type    = "A"
+  ttl     = "300"
   records = [aws_instance.hr-app-2.public_ip]
 }
 
