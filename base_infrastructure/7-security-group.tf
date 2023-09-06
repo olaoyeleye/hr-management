@@ -57,7 +57,7 @@ resource "aws_security_group" "hr-app-sg" {
 
 
 resource "aws_security_group" "hr-app-load-balancer-sg" {
-  name        = "hr-app-sg"
+  name        = "hr-app-load-balancer-sg"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.hr-app-vpc.id
 
