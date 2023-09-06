@@ -17,3 +17,8 @@
 db
 zeus
 hrapp
+
+
+#  sudo docker pull japostina/hrapp:v1
+#  sudo docker image ls
+#  sudo docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=kensko -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_KEY_NAME=AKIA2IKYRSF7VMYU4LSI  -e AWS_ACCESS_NAME=Ax3Y8ceejNPCZ+gQ5QGiB4U+o0rGhEh7KNwghEP9 {add image}
