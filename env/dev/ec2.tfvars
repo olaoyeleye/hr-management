@@ -23,8 +23,8 @@ rds_username = "kensko"
 ami = "ami-01dd271720c1ba44f"
 
 aws_region = "eu-west-1"
-key_name   = "hr-management-key" #"techbleat-ket"
-
+key_name   = "hr-app-key"    #"hr-management-key" #"techbleat-ket"
+# change usermode in powershell > Set-ItemProperty -Path Users/USER/Downloads/hr-app-key.pem -Name Attributes -Value 1
 
 default_tags = {
   "Name"              = "HR-APP"
