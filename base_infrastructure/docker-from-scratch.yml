@@ -47,7 +47,7 @@
      #   password: "{{password}}" 
 
     - name: install python2 on all target nodes
-      command: apt install python2 #python3-docker
+      command: apt install python3 #python3-docker
         
     - name: Pull an image
       community.docker.docker_image:
@@ -58,19 +58,27 @@
           platform: v1
 
 
+
+
     - name: Building Remove the image if exist , just to do a clean up before installation
       command: docker rmi hrapp:v1
       ignore_errors: yes
 
      
      
-    #- name: Log out of DockerHub
-    #  docker_login:
+   # - name: Log out of DockerHub
+     # docker_login:
      #   state: absent
 
+                  
+               
+
+    - name: Get image ID
+      command: touch long_sh56_id && docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id  && touch my-docker-id  && $(long_sh56_id:7:4} >  my-docker-id && echo my-docker-id
+      ignore_errors: yes
 
     - name: building docker container image out of the docker image that has been built from the previous module
-      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=kensko -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_KEY_NAME="{{AWS_KEY_NAME}}"  -e AWS_ACCESS_NAME="{{AWS_ACCESS_NAME}}"
+      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=kensko -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_KEY_NAME="{{AWS_KEY_NAME}}"  -e AWS_ACCESS_NAME="{{AWS_ACCESS_NAME}}" my-docker-id
       
 
     #- name: building docker container image out of the docker image that has been built from the previous module
