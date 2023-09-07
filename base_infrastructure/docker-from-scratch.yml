@@ -59,7 +59,7 @@
 
     - name: Update system packages and clean up
       - command: bash "{{item}}"
-        with_itemss:
+        with_items:
         - touch long_sh56_id 
         - docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id 
         - touch my-docker-id 
