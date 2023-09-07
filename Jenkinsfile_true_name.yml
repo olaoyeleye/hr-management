@@ -139,14 +139,10 @@ pipeline {
                   cd base_infrastructure
                   cat $hr_ansible_variables
                   mv $hr_ansible_variables .
-                    echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
-                    cat tmpp
-                    echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
-                    cat tmpp2
                     
                   cat $inventory
-                  echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var @AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-from-scratch.yml -u ubuntu
+                  echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_KEY_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @AWS_ACCESS_NAME=$AWS_ACCESS_KEY_ID  -u ubuntu
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml -u ubuntu
 
                    '''
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
