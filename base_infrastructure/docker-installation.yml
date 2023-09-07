@@ -71,7 +71,7 @@
         state: restarted
  
     - name: Update all hrapp target nodes
-      command: apt update -y
+      command: apt update
 
 
 
