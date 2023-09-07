@@ -6,12 +6,12 @@ pipeline {
         DOCKERHUB_CREDENTIALS_USER=credentials('USER')
         DOCKERHUB_CREDENTIALS_PSW=credentials('PASSWORD')
         DOCKER_REGISTRY=credentials('DOCKER_REGISTRY')
-        hr_management_key=credentials('hr_management_key')
+        hr_app_key=credentials('hr-app-key')
         hr_ansible_variables= credentials('hr_ansible_variables')
         
        //# POSTGRES_DATABASE_NAME= credentials('POSTGRES_DATABASE_NAME')
        //# POSTGRES_PASSWORD= credentials('POSTGRES_PASSWORD')
-       //# POSTGRES_HOST= credentials('POSTGRES_HOST')
+       
         inventory= credentials('inventory')
         
     }
@@ -35,19 +35,19 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                   terraform init --backend-config=../env/dev/backend.tfvars           
+                  # terraform init --backend-config=../env/dev/backend.tfvars           
                   
                    '''
             }
         }
         stage ("stage 3 - Terraform apply - infrastructure creation"){
             steps {
-                echo "This is stage 3, where we do terraform apply"
+                echo "This is stage 3, where we do terraform apply or destroy"
                 sh '''
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                   terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+                   #terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
                   
                    '''
             }
@@ -80,7 +80,7 @@ pipeline {
             steps {
                 echo "This is stage 6, where i log in into dockerhub account"
                 sh '''
-              docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
+                docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
                    '''
             }
         }
@@ -123,7 +123,9 @@ pipeline {
                   cd jenkins
                   cd hr-management
                   cd base_infrastructure
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-installation.yml -u ubuntu
+
+                  ls -ltr $hr_app_key
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-installation.yml -u ubuntu
                    '''
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
@@ -137,21 +139,18 @@ pipeline {
                   cd jenkins
                   cd hr-management
                   cd base_infrastructure
-         
-
-                  echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --extra-var @AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -u ubuntu
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i $inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --extra-var @AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY  -u ubuntu
+                  ls -ltr
+                  echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-from-scratch.yml  --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
 
                    '''
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
-                                      echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
-                  //  cat tmpp
-                   // echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
-                   // cat tmpp2
-                    
-                  //cat $inventory
-            }
+                 // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW-u ubuntu
+
+        
+        
         }
+    }
     }
     post {
         always {
@@ -169,3 +168,11 @@ pipeline {
 }
       
       
+                   // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
+                                      echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
+                  //  cat tmpp
+                   // echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
+                   // cat tmpp2
+                    
+                  //cat $inventory
+     
