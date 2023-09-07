@@ -47,7 +47,7 @@
      #   password: "{{password}}" 
 
     - name: install python2 on all target nodes
-      command: apt install python 2 #python3-docker
+      command: apt install python2 #python3-docker
         
     - name: Pull an image
       community.docker.docker_image:
