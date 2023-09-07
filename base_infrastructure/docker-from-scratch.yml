@@ -59,7 +59,7 @@
 
     - name: Update system packages and clean up
       command: bash "{{item}}"
-        with_items:
+      with_items:
         - long_sh56_id=$(docker inspect japostina/hrapp:v1 | grep "Id") 
         - my-docker-id=${long_sh56_id:7:4} 
         - echo my-docker-id
@@ -68,7 +68,7 @@
     #  command: sh /home/test_user/test.sh
   
   
-     - name: stop container if exist and running
+    - name: stop container if exist and running
       command: docker stop hrapp:v1
       ignore_errors: yes
 
