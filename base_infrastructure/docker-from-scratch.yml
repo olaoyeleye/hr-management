@@ -58,10 +58,10 @@
       
 
     - name: Update system packages and clean up
-      command: bash "{{item}}"
-      with_items:
-        - long_sh56_id=$(docker inspect japostina/hrapp:v1 | grep "Id") 
-        - my-docker-id=${long_sh56_id:7:4} 
+      shell: >
+         long_sh56_id=$(docker inspect japostina/hrapp:v1 | grep "Id") 
+         my-docker-id=${long_sh56_id:7:4} 
+         echo my-docker-id
   
     - name: Ansible Array Usage Example
       debug:
