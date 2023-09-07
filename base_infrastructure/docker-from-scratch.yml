@@ -56,7 +56,7 @@
   
     - name: Output container_ID
       debug:
-        msg: "{{ $container_ID}}"  
+        msg: "{{ container_ID}}"  
   
     - name: stop container if exist and running
       command: docker stop hrapp:v1
