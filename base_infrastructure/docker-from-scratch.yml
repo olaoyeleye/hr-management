@@ -27,6 +27,9 @@
       command: sudo rm -r hrapp
       ignore_errors: yes
 
+    #- name: install python2 on all target nodes
+    #  command: apt uninstall python3 && uninstall python2
+
 
     - name: install python2 on all target nodes
       command: apt install python2 #python3-docker
