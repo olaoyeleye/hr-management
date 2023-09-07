@@ -58,12 +58,11 @@
     #  ignore_errors: yes
 
     - name: Update system packages and clean up
-      ansible.builtin.shell: |
-        touch long_sh56_id &&
-        docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id &&
-        touch my-docker-id &&
-        $(long_sh56_id:7:4} >  my-docker-id && 
-        echo my-docker-id
+      - command: touch long_sh56_id &&
+      - command: docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id &&
+      - command: touch my-docker-id &&
+      - command: $(long_sh56_id:7:4} >  my-docker-id && 
+      - command: echo my-docker-id
 
     - name: stop container if exist and running
       command: docker stop hrapp:v1
