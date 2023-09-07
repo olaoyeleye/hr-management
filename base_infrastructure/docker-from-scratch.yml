@@ -31,21 +31,39 @@
     #  command: apt uninstall python3 && uninstall python2
 
 
-    #- name: install python2 on all target nodes
-    #  command: apt install python2 #python3-docker
-        
+    #- name: Update system packages and clean up
+    #  ansible.builtin.shell: |
+    #    apt-get update &&
+    #    apt-get upgrade -y &&
+    #    apt-get clean
+
+
+
+
     - name: Pull an image
-      community.docker.docker_image:
-        name: japostina/hrapp
-        source: pull
-       # Select platform for pulling. If not specified, will pull whatever docker prefers.
-        pull:
-          platform: v1
+      ansible.builtin.shell: |
+        docker pull japostina/hrapp:v1
+
+
+    #- name: Pull an image
+    #  community.docker.docker_image:
+   #     name: japostina/hrapp
+    #    source: pull
+    #   # Select platform for pulling. If not specified, will pull whatever docker prefers.
+    #    pull:
+    #      platform: v1
 
     - name: Get image ID
       command: touch long_sh56_id && docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id  && touch my-docker-id  && $(long_sh56_id:7:4} >  my-docker-id && echo my-docker-id
       ignore_errors: yes
 
+    #- name: Update system packages and clean up
+    #  ansible.builtin.shell: |
+     #   touch long_sh56_id &&
+     #   docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id &&
+     #   touch my-docker-id &&
+     #   $(long_sh56_id:7:4} >  my-docker-id && 
+     #   echo my-docker-id
 
     - name: stop container if exist and running
       command: docker stop hrapp:v1
