@@ -25,15 +25,15 @@
 
 
     - name: stop container if exist and running
-      command: docker stop hrapp
+      command: docker stop hrapp:v1
       ignore_errors: yes
 
     - name: remove hrapp folder and its content if exists
-      command: sudo rm -r hrapp
+      command: sudo rm -r hrapp:v1
       ignore_errors: yes
 
     - name: Remove the container if exist and has been stopped by the previous module
-      command: docker rm hrapp
+      command: docker rm hrapp:v1
       ignore_errors: yes 
 
     - name: Remove the image if exist , just to do a clean up before installation
