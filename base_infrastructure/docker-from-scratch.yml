@@ -27,31 +27,12 @@
       command: sudo rm -r hrapp
       ignore_errors: yes
 
-    #- name: install python2 on all target nodes
-    #  command: apt uninstall python3 && uninstall python2
-
-
-    #- name: Update system packages and clean up
-    #  ansible.builtin.shell: |
-    #    apt-get update &&
-    #    apt-get upgrade -y &&
-    #    apt-get clean
-
-
-
-
+ 
     - name: Pull an image
       ansible.builtin.shell: |
         docker pull japostina/hrapp:v1
 
-
-    #- name: Pull an image
-    #  community.docker.docker_image:
-   #     name: japostina/hrapp
-    #    source: pull
-    #   # Select platform for pulling. If not specified, will pull whatever docker prefers.
-    #    pull:
-    #      platform: v1
+ 
 
     #- name: Get image ID
     #  command: sh touch long_sh56_id && docker inspect japostina/hrapp:v1 | grep "Id" > long_sh56_id  && touch my-docker-id  && $(long_sh56_id:7:4} >  my-docker-id && echo my-docker-id
@@ -63,10 +44,7 @@
     #     long_sh56_id=$(docker inspect japostina/hrapp:v1 | grep "Id") 
     #     my-docker-id=${long_sh56_id:7:4} 
     #     echo "$my-docker-id"
-  
-    #- name: Ansible Array Usage Example
-    #  debug:
-    #    msg: "{{ my-docker-id}}"
+
 
 
     - name : get container ID
@@ -76,6 +54,9 @@
     #- name: Execute the script
     #  command: sh /home/test_user/test.sh
   
+    - name: Output container_ID
+      debug:
+        msg: "{{ $container_ID}}"  
   
     - name: stop container if exist and running
       command: docker stop hrapp:v1
@@ -116,7 +97,7 @@
 
 
     - name: building docker container image out of the docker image that has been built from the previous module
-      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=kensko -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_KEY_NAME="{{AWS_KEY_NAME}}"  -e AWS_ACCESS_NAME="{{AWS_ACCESS_NAME}}" my-docker-id
+      ansible.builtin.command: docker run -p 80:5000 -e POSTGRES_HOST=postgresdb.ctk8zg9pwc42.eu-west-1.rds.amazonaws.com -e POSTGRES_USER=kensko -e POSTGRES_DATABASE_NAME=postgres -e POSTGRES_PASSWORD=Kehinde12 -e TO_ADDRESS=olakunleoyeleye123@gmail.com -e SOURCE_ADDRESS=olakunleoyeleye123@gmail.com -e AWS_REGION_NAME=eu-west-1 -e AWS_KEY_NAME="{{AWS_KEY_NAME}}"  -e AWS_ACCESS_NAME="{{AWS_ACCESS_NAME}}" $container_ID
       
 
     #- name: building docker container image out of the docker image that has been built from the previous module
