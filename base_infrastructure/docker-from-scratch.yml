@@ -8,6 +8,8 @@
     version: "2.46.0"
     #username:
     #password:
+    AWS_ACCESS_NAME:  
+    AWS_KEY_NAME: 
   tasks:
     #- name: Remove directory
     #  file:
