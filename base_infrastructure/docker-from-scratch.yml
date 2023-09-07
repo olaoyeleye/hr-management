@@ -31,8 +31,8 @@
     #  command: apt uninstall python3 && uninstall python2
 
 
-    - name: install python2 on all target nodes
-      command: apt install python2 #python3-docker
+    #- name: install python2 on all target nodes
+    #  command: apt install python2 #python3-docker
         
     - name: Pull an image
       community.docker.docker_image:
