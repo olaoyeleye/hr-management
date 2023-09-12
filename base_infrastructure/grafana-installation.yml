@@ -1,0 +1,43 @@
+---
+- name: Configure grafana on Ubuntu
+  hosts: zeus
+  become: yes
+
+  tasks:
+    - name: Update the package cache
+      apt:
+        update_cache: yes
+
+    - name: Install apt-transport-https and software-properties-common
+      apt:
+        name:
+          - apt-transport-https
+          - software-properties-common
+        state: present
+        
+    - name: Import Grafana GPG key
+      apt_key:
+        url: https://packages.grafana.com/gpg.key
+        state: present
+
+    - name: Add Grafana repository entry to /etc/apt/sources.list.d/grafana.list
+      lineinfile:
+        path: /etc/apt/sources.list.d/grafana.list
+        line: "deb https://packages.grafana.com/oss/deb stable main"
+        create: yes
+
+    - name: update the machine
+      command: sudo apt-get update
+
+    - name: install grafana
+      command: sudo apt-get -y install grafana
+
+    - name: enable grafana
+      command: sudo systemctl enable grafana-server
+   
+    - name: move datasources.yml file into /etc/grafana/provisioning/datasource/datasources.yaml
+      command: sudo mv /datasources.yml /etc/grafana/provisioning/datasources/datasources.yaml
+        
+
+    - name: enable grafana
+      command: sudo systemctl restart grafana-server

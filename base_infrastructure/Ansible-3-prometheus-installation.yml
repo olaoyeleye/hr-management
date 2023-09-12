@@ -1,0 +1,81 @@
+---
+- hosts: zeus
+  become: yes
+  #become_user: root
+  become_method: sudo
+- name: Install Prometheus on Ubuntu
+  tasks:
+    - name: Add prometheus user
+      user:
+        name: prometheus
+        system: yes
+        createhome: no
+        shell: /bin/false
+
+    - name: Create /data directory
+      file:
+        path: /data
+        state: directory
+        owner: some_user
+        group: some_group
+        mode: '0755'  # Adjust the permissions as needed
+
+    - name: Create /etc/prometheus directory
+      file:
+        path: /etc/prometheus
+        state: directory
+        owner: some_user
+        group: some_group
+        mode: '0755'  # Adjust the permissions as needed
+
+    - name: Download a file
+      get_url:
+        url: "https://github.com/prometheus/prometheus/releases/download/v2.32.1/prometheus-2.32.1.linux-amd64.tar.gz"
+        dest: "/"
+
+
+    - name: Extract Prometheus tar.gz
+      ansible.builtin.unarchive:
+        src: /prometheus-2.32.1.linux-amd64.tar.gz  # source path
+        dest: /                  # destination folder
+        remote_src: yes
+
+
+    - name: Change directory into prometheus
+      command: cd /prometheus-2.32.1.linux-amd64
+ 
+    - name: move prometheus folder and promtool folders into usr/local/bin 
+      command: sudo mv /prometheus /promtool /usr/local/bin/
+      
+    - name: move consoles and console_libraries folders into /etc/prometheus
+      command: sudo mv /consoles/ /console_libraries/ /etc/prometheus/
+      
+    - name: move prometheus.yml file into /etc/prometheus
+      command: sudo mv /prometheus.yml /etc/prometheus/prometheus.yml
+     
+    - name: Change ownership of /etc/prometheu and /data folders to prometheus user
+      command: sudo chown -R prometheus:prometheus /etc/prometheus/ /data/
+
+    - name: list content of pwd
+      command: sudo ls
+
+    - name: prometheus version
+      command: prometheus --version
+
+
+    - name: move prometheus.service into /etc/systemd/system/
+      command: sudo mv prometheus.service /etc/systemd/system/prometheus.service
+
+    - name: Add Prometheus APT Repository
+      apt_repository:
+        repo: "deb https://packages.grafana.com/oss/deb stable main"
+        state: present
+
+    - name: enable prometheus 
+      command: sudo systemctl enable prometheus
+
+    - name: Start Prometheus Service
+      systemd:
+        name: prometheus
+        state: started
+        enabled: yes

@@ -1,6 +1,6 @@
 ---
 - name: Configure Alertmanager on Ubuntu
-  hosts: alertmanager_server
+  hosts: zeus
   become: yes
 
   tasks:

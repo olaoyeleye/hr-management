@@ -1,0 +1,49 @@
+---
+- hosts: zeus
+  become: yes
+  #become_user: root
+  become_method: sudo
+- name: Install node_exporter on Ubuntu
+  tasks:
+    - name: Add node_exporter user
+      user:
+        name: node_exporter
+        system: yes
+        createhome: no
+        shell: /bin/false
+
+    - name: Download a file
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz"
+        dest: "/"
+
+
+    - name: Extract node_exporter tar.gz
+      ansible.builtin.unarchive:
+        src: /node_exporter-1.3.1.linux-amd64.tar.gz # source path
+        dest: /                  # destination folder
+        remote_src: yes
+
+
+    - name: move node_exporter folder  into usr/local/bin 
+      command: sudo mv /node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/
+      
+    - name: move consoles and console_libraries folders into /etc/prometheus
+      command: node_exporter --version
+
+    - name: list content of pwd
+      command: sudo ls
+
+    - name: move prometheus.yml file into /etc/prometheus
+      command: sudo mv /node_exporter.service /etc/systemd/system/node_exporter.service
+     
+    - name: enable node exporter
+      command: sudo systemctl enable node_exporter
+
+    - name: list content of pwd
+      command: sudo ls
+
+    - name: Restart Node Exporter
+      systemd:
+        name: node_exporter
+        state: restarted

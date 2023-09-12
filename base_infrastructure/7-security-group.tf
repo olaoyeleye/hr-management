@@ -40,6 +40,30 @@ resource "aws_security_group" "hr-app-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.hr-app-vpc.cidr_block]
   }
+  ingress {
+    description = "TLS for prometheus"
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.hr-app-vpc.cidr_block]
+  }
+
+  ingress {
+    description = "TLS for node- exporter"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.hr-app-vpc.cidr_block]
+  }
+  ingress {
+    description = "TLS for alert manager"
+    from_port   = 9093
+    to_port     = 9093
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.hr-app-vpc.cidr_block]
+  }
+
+
 
   egress {
     from_port        = 0
