@@ -11,6 +11,9 @@
         system: yes
         createhome: no
         shell: /bin/false
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker prometheus
 
     - name: Create /data directory
       file:

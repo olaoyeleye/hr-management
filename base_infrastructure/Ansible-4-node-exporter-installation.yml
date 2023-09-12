@@ -11,6 +11,10 @@
         system: yes
         createhome: no
         shell: /bin/false
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker node_exporter
+
 
     - name: Download a file
       get_url:
