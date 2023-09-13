@@ -71,14 +71,6 @@
  
 
 
-    - name: list all content of pwd
-      command: ls -ltr 
-
-      
-    - name: list all content of pwd
-      command: ls -ltr /
-
-
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: mv /prometheus-2.32.1.linux-amd64/prometheus /prometheus-2.32.1.linux-amd64/promtool /usr/local/bin/
       ignore_errors: yes
@@ -93,13 +85,6 @@
       ignore_errors: yes 
 
 
-    - name: Clone the Git repository
-      ansible.builtin.git:
-        repo: https://github.com/olaoyeleye/hr-management.git
-        dest: /home/ubuntu/
-        clone: yes
-        update: no  # Set to yes if you want to update an existing clone
-       
 
     - name: Pause for 1 minutes to finish downloading
       ansible.builtin.pause:
@@ -108,9 +93,6 @@
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
       command: "chown -R prometheus:prometheus /etc/prometheus/ /data/ /home/ubuntu/hr-management"
   
-
-    - name: list content of ~/hr-management
-      command: sudo /home/ubuntu/hr-management
 
     - name: prometheus version
       command: prometheus --version
@@ -125,16 +107,10 @@
     #    recurse: yes
     #  become: yes
 
-    - name: list all content of /home/ubuntu/ 
-      command: ls -ltr /home/ubuntu/
-
-      
-    - name: list all content of /home/ubuntu/hr-management
-      command: ls -ltr /home/ubuntu/hr-management
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
-        src: /home/ubuntu/hr-management/base_infrastructure/prometheus.service 
+        src: prometheus.service 
         dest: /home/ubuntu/prometheus.service 
         
 
