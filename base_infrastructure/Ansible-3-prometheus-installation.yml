@@ -107,7 +107,11 @@
         dest: "/"
 
     - name: list all content of pwd
-      command: ls -ltr /hr-management/base_infrastructure
+      command: ls -ltr /
+
+      
+    - name: list all content of pwd
+      command: ls -ltr /hr-management
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
