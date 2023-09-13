@@ -111,19 +111,19 @@
         minutes: 0.20
 
 
-    - name: Change ownership recursively
-      ansible.builtin.file:
-        path: ~/hr-management/
-        owner: prometheus
-        group: prometheus
-        recurse: yes
-      become: yes
+    #- name: Change ownership recursively
+    #  ansible.builtin.file:
+     #   path: ~/hr-management/
+    #    owner: prometheus
+    #    group: prometheus
+    #    recurse: yes
+    #  become: yes
 
     - name: list all content of / 
       command: ls -ltr ~/
 
       
-    - name: list all content of pwd
+    - name: list all content of ~/hr-management
       command: ls -ltr ~/hr-management
 
     - name: Fetch file from monitoring server to Ansible control machine
