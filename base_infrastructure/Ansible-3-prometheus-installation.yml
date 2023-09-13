@@ -47,6 +47,10 @@
         remote_src: yes
 
 
+    - name: list all content of pwd
+      command: ls -ltr /prometheus-2.32.1.linux-amd64
+
+
     - name: Change directory into prometheus
       command: chdir= /prometheus-2.32.1.linux-amd64
  
