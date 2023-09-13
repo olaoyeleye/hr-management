@@ -76,15 +76,15 @@
 
 
     - name: move prometheus folder and promtool folders into usr/local/bin 
-      command: mv prometheus promtool /usr/local/bin/
+      command: mv /prometheus-2.32.1.linux-amd64/prometheus /prometheus-2.32.1.linux-amd64/promtool /usr/local/bin/
 
     - name: move consoles and console_libraries folders into /etc/prometheus
-      command: "mv consoles console_libraries /etc/prometheus/"
+      command: "mv /prometheus-2.32.1.linux-amd64/consoles /prometheus-2.32.1.linux-amd64/console_libraries /etc/prometheus/"
      
 
     
     - name: move prometheus.yml file into /etc/prometheus
-      command: "mv consoles console_libraries /etc/prometheus/"
+      command: "mv /prometheus-2.32.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml"
  
 
 
