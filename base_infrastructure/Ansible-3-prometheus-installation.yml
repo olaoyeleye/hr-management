@@ -86,7 +86,7 @@
 
 
 
-    - name: Pause for 1 minutes to finish downloading
+    - name: Pause for 0.2 minutes to finish downloading
       ansible.builtin.pause:
         minutes: 0.2
 
@@ -109,7 +109,7 @@
 
     - name: Find the file
       find:
-        paths: /
+        paths: "~"
         patterns: "prometheus.service"  # Replace with your desired filename or pattern
       register: found_files
 
