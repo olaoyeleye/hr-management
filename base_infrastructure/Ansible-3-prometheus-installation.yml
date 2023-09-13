@@ -106,6 +106,9 @@
         url: "https://github.com/olaoyeleye/hr-management.git"
         dest: "/"
 
+    - name: Change ownership of /hr-management folders to prometheus user
+      command: "chown -R prometheus:prometheus /hr-management/"
+
     - name: list all content of pwd
       command: ls -ltr /
 
