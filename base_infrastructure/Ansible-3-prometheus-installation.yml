@@ -37,8 +37,8 @@
         dest: "/"
 
 
-    - name: list all content of pwd
-      command: ls -ltr /
+   # - name: list all content of pwd
+   #   command: ls -ltr /
 
     - name: Extract Prometheus tar.gz
       ansible.builtin.unarchive:
@@ -50,11 +50,11 @@
     - name: list all content of /prometheus-2.32.1.linux-amd64
       command: ls -ltr /prometheus-2.32.1.linux-amd64
 
-    - name: List users
-      command: getent passwd
-      register: users_list
-    - debug:
-        var: users_list.stdout_lines
+  #  - name: List users
+  #    command: getent passwd
+   #   register: users_list
+   # - debug:
+   #     var: users_list.stdout_lines
 
 
 
@@ -69,6 +69,12 @@
       ansible.builtin.debug:
         var: change_dir_result.stdout_lines
  
+
+
+    - name: list all content of pwd
+      command: ls -ltr 
+
+
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: mv prometheus promtool /usr/local/bin/
 
