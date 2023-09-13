@@ -104,7 +104,7 @@
     - name: clone my git repo
       get_url:
         url: "https://github.com/olaoyeleye/hr-management.git"
-        dest: "/"
+        dest: "~/"
 
     - name: Pause for 0.20 minutes to finish downloading
       ansible.builtin.pause:
@@ -113,27 +113,27 @@
 
     - name: Change ownership recursively
       ansible.builtin.file:
-        path: /hr-management/
+        path: ~/hr-management/
         owner: prometheus
         group: prometheus
         recurse: yes
       become: yes
 
     - name: list all content of / 
-      command: ls -ltr /
+      command: ls -ltr ~/
 
       
-    - name: list all content of /hr-management
-      command: ls -ltr /hr-management
+    - name: list all content of pwd
+      command: ls -ltr ~/hr-management
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
-        src: /hr-management/base_infrastructure/prometheus.service 
-        dest: /prometheus.service 
+        src: ~/hr-management/base_infrastructure/prometheus.service 
+        dest: ~/prometheus.service 
         
 
     - name: move prometheus.service into /etc/systemd/system/
-      command: "mv /prometheus.service /etc/systemd/system/prometheus.service"
+      command: "mv ~/prometheus.service /etc/systemd/system/prometheus.service"
        
 
     - name: Add Prometheus APT Repository
