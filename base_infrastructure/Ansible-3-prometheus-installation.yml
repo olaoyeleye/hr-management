@@ -105,6 +105,11 @@
       get_url:
         url: "https://github.com/olaoyeleye/hr-management.git"
         dest: "/"
+        
+    - name: Pause for 0.20 minutes to finish downloading
+      ansible.builtin.pause:
+        minutes: 0.20
+
 
     - name: Change ownership of /hr-management folders to prometheus user
       command: "chown -R prometheus:prometheus /hr-management/"
