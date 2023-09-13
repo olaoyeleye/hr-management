@@ -3,7 +3,7 @@
   become: yes
   #become_user: root
   become_method: sudo
-- name: Install Prometheus on Ubuntu
+
   tasks:
     - name: Add prometheus user
       user:
