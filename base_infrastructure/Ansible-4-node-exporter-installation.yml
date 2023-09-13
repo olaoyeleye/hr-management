@@ -37,15 +37,14 @@
     - name: move consoles and console_libraries folders into /etc/prometheus
       command: node_exporter --version
 
+
     - name: list content of pwd
       command: sudo ls
-    - name: move prometheus.yml file into /etc/prometheus 
-      ansible.builtin.sudo:
-        cmd: "mv /node_exporter.service /etc/systemd/system/node_exporter.service"
-      sudo_user: prometheus
 
-    - name:
-      command: sudo 
+
+    - name: move prometheus.yml file into /etc/prometheus 
+      command: "mv /node_exporter.service /etc/systemd/system/node_exporter.service"
+
      
     - name: enable node exporter
       command: sudo systemctl enable node_exporter

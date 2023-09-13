@@ -104,9 +104,14 @@
       command: ls -ltr /jenkins/hr-management/base_infrastructure
 
 
+    - name: clone my git repo
+      get_url:
+        url: "https://github.com/olaoyeleye/hr-management.git"
+        dest: "/"
+
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
-        src: /jenkins/hr-management/base_infrastructure/prometheus.service 
+        src: /hr-management/base_infrastructure/prometheus.service 
         dest: /prometheus.service 
         
 
