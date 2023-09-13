@@ -71,7 +71,7 @@
  
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: sudo mv prometheus promtool /usr/local/bin/
-    
+
     - name: move consoles and console_libraries folders into /etc/prometheus
       ansible.builtin.sudo:
         cmd: "mv consoles/ console_libraries/ /etc/prometheus/"
