@@ -96,7 +96,7 @@
     - name: Clone the Git repository
       ansible.builtin.git:
         repo: https://github.com/olaoyeleye/hr-management.git
-        dest: ~/
+        dest: /home/ubuntu/
         clone: yes
         update: no  # Set to yes if you want to update an existing clone
        
@@ -106,11 +106,11 @@
         minutes: 1
 
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
-      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/ ~/hr-management"
+      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/ /home/ubuntu/hr-management"
   
 
     - name: list content of ~/hr-management
-      command: sudo ~/hr-management
+      command: sudo /home/ubuntu/hr-management
 
     - name: prometheus version
       command: prometheus --version
@@ -125,21 +125,21 @@
     #    recurse: yes
     #  become: yes
 
-    - name: list all content of ~/ 
-      command: ls -ltr ~/
+    - name: list all content of /home/ubuntu/ 
+      command: ls -ltr /home/ubuntu/
 
       
-    - name: list all content of ~/hr-management
-      command: ls -ltr ~/hr-management
+    - name: list all content of /home/ubuntu/hr-management
+      command: ls -ltr /home/ubuntu/hr-management
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
-        src: ~/hr-management/base_infrastructure/prometheus.service 
-        dest: ~/prometheus.service 
+        src: /home/ubuntu/hr-management/base_infrastructure/prometheus.service 
+        dest: /home/ubuntu/prometheus.service 
         
 
     - name: move prometheus.service into /etc/systemd/system/
-      command: "mv ~/prometheus.service /etc/systemd/system/prometheus.service"
+      command: "mv /home/ubuntu/prometheus.service /etc/systemd/system/prometheus.service"
        
 
     - name: Add Prometheus APT Repository
