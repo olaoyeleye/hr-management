@@ -56,6 +56,9 @@
     - debug:
         var: users_list.stdout_lines
 
+
+
+
     - name: Change directory into prometheus
       ansible.builtin.shell: cd /prometheus-2.32.1.linux-amd64
       args:
@@ -67,13 +70,13 @@
         var: change_dir_result.stdout_lines
  
     - name: move prometheus folder and promtool folders into usr/local/bin 
-      command: sudo mv /prometheus /promtool /usr/local/bin/
+      command: sudo mv prometheus promtool /usr/local/bin/
       
     - name: move consoles and console_libraries folders into /etc/prometheus
-      command: sudo mv /consoles/ /console_libraries/ /etc/prometheus/
+      command: sudo mv consoles/ console_libraries/ /etc/prometheus/
       
     - name: move prometheus.yml file into /etc/prometheus
-      command: sudo mv /prometheus.yml /etc/prometheus/prometheus.yml
+      command: sudo mv prometheus.yml /etc/prometheus/prometheus.yml
      
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
       command: sudo chown -R prometheus:prometheus /etc/prometheus/ /data/
