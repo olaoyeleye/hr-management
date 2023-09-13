@@ -37,6 +37,9 @@
         dest: "/"
 
 
+    - name: list all content of pwd
+      command: ls -ltr /
+
     - name: Extract Prometheus tar.gz
       ansible.builtin.unarchive:
         src: /prometheus-2.32.1.linux-amd64.tar.gz  # source path
