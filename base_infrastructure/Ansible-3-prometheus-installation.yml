@@ -88,7 +88,7 @@
 
     - name: Pause for 1 minutes to finish downloading
       ansible.builtin.pause:
-        minutes: 1
+        minutes: 0.2
 
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
       command: "chown -R prometheus:prometheus /etc/prometheus/ /data/"
