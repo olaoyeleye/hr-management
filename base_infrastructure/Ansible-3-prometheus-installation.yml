@@ -45,7 +45,7 @@
 
 
     - name: Change directory into prometheus
-      command: cd /prometheus-2.32.1.linux-amd64
+      command: chdir= /prometheus-2.32.1.linux-amd64
  
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: sudo mv /prometheus /promtool /usr/local/bin/
