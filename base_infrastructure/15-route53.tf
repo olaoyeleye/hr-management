@@ -7,6 +7,18 @@ resource "aws_route53_zone" "hrapp-route53" {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 resource "aws_route53_record" "hrapp-ns-1" {
   zone_id = aws_route53_zone.hrapp-route53.zone_id
   name    = "hrapp-1.kensko.com"
