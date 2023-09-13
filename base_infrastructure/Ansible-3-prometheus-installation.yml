@@ -132,8 +132,8 @@
    #     repo: "deb https://packages.grafana.com/oss/deb stable main"
    #     state: present
 
-    - name: add GPG Key 
-      command: sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+   # - name: add GPG Key 
+   #   command: sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
     - name: enable prometheus 
       command: sudo systemctl enable prometheus
