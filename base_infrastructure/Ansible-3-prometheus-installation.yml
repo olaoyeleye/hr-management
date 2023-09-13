@@ -93,11 +93,13 @@
       ignore_errors: yes 
 
 
-    - name: clone my git repo
-      get_url:
-        url: "https://github.com/olaoyeleye/hr-management.git"
-        dest: "~/"
-
+    - name: Clone the Git repository
+      ansible.builtin.git:
+        repo: https://github.com/olaoyeleye/hr-management.git
+        dest: ~/
+        clone: yes
+        update: no  # Set to yes if you want to update an existing clone
+       
 
     - name: Pause for 1 minutes to finish downloading
       ansible.builtin.pause:
