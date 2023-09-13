@@ -57,7 +57,14 @@
         var: users_list.stdout_lines
 
     - name: Change directory into prometheus
-      command: chdir= /prometheus-2.32.1.linux-amd64
+      ansible.builtin.shell: cd /prometheus-2.32.1.linux-amd64
+      args:
+        executable: /bin/bash  # Specify the shell to use if needed
+      register: change_dir_result
+
+    - name: Display Result
+      ansible.builtin.debug:
+        var: change_dir_result.stdout_lines
  
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: sudo mv /prometheus /promtool /usr/local/bin/
