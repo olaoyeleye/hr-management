@@ -107,6 +107,15 @@
     #    recurse: yes
     #  become: yes
 
+    - name: Find the file
+      find:
+        paths: /
+        patterns: "prometheus.service"  # Replace with your desired filename or pattern
+      register: found_files
+
+    - debug:
+        var: found_files.files
+
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
