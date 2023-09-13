@@ -28,18 +28,24 @@
         dest: /                  # destination folder
         remote_src: yes
 
+    - name: move node_exporter folder  into usr/local/bin  
+      ansible.builtin.sudo:
+        cmd: "mv /node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/"
+      sudo_user: prometheus
 
-    - name: move node_exporter folder  into usr/local/bin 
-      command: sudo mv /node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/
-      
+
     - name: move consoles and console_libraries folders into /etc/prometheus
       command: node_exporter --version
 
     - name: list content of pwd
       command: sudo ls
+    - name: move prometheus.yml file into /etc/prometheus 
+      ansible.builtin.sudo:
+        cmd: "mv /node_exporter.service /etc/systemd/system/node_exporter.service"
+      sudo_user: prometheus
 
-    - name: move prometheus.yml file into /etc/prometheus
-      command: sudo mv /node_exporter.service /etc/systemd/system/node_exporter.service
+    - name:
+      command: sudo 
      
     - name: enable node exporter
       command: sudo systemctl enable node_exporter

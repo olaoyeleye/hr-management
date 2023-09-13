@@ -71,15 +71,24 @@
  
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: sudo mv prometheus promtool /usr/local/bin/
-      
+    
     - name: move consoles and console_libraries folders into /etc/prometheus
-      command: sudo mv consoles/ console_libraries/ /etc/prometheus/
-      
+      ansible.builtin.sudo:
+        cmd: "mv consoles/ console_libraries/ /etc/prometheus/"
+      sudo_user: prometheus
+
+    
     - name: move prometheus.yml file into /etc/prometheus
-      command: sudo mv prometheus.yml /etc/prometheus/prometheus.yml
-     
+      ansible.builtin.sudo:
+        cmd: "mv consoles/ console_libraries/ /etc/prometheus/"
+      sudo_user: prometheus
+
+
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
-      command: sudo chown -R prometheus:prometheus /etc/prometheus/ /data/
+      ansible.builtin.sudo:
+        cmd: "chown -R prometheus:prometheus /etc/prometheus/ /data/"
+      sudo_user: prometheus
+
 
     - name: list content of pwd
       command: sudo ls
@@ -87,9 +96,10 @@
     - name: prometheus version
       command: prometheus --version
 
-
     - name: move prometheus.service into /etc/systemd/system/
-      command: sudo mv prometheus.service /etc/systemd/system/prometheus.service
+      ansible.builtin.sudo:
+        cmd: "mv prometheus.service /etc/systemd/system/prometheus.service"
+      sudo_user: prometheus
 
     - name: Add Prometheus APT Repository
       apt_repository:
