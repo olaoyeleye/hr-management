@@ -30,8 +30,8 @@
       copy:
         src: /opt/alertmanager/alertmanager.yml
         dest: /etc/alertmanager/alertmanager.yml
-        owner: root
-        group: root
+        owner: prometheus
+        group: prometheus
         mode: '0644'
 
     - name: Create Alertmanager systemd service

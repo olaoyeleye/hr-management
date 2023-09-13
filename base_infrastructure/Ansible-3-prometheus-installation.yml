@@ -19,16 +19,16 @@
       file:
         path: /data
         state: directory
-        owner: some_user
-        group: some_group
+        owner: prometheus
+        group: prometheus
         mode: '0755'  # Adjust the permissions as needed
 
     - name: Create /etc/prometheus directory
       file:
         path: /etc/prometheus
         state: directory
-        owner: some_user
-        group: some_group
+        owner: prometheus
+        group: prometheus
         mode: '0755'  # Adjust the permissions as needed
 
     - name: Download a file
