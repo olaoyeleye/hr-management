@@ -91,7 +91,7 @@
         minutes: 1
 
     - name: Change ownership of /etc/prometheu and /data folders to prometheus user
-      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/ /home/ubuntu/hr-management"
+      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/"
   
 
     - name: prometheus version
