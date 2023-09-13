@@ -109,7 +109,7 @@
 
     - name: Find the file
       find:
-        paths: "~"
+        paths: /var/lib/jenkins/workspace/hrapp/jenkins/hr-management/base_infrastructure/
         patterns: "prometheus.service"  # Replace with your desired filename or pattern
       register: found_files
 
@@ -119,7 +119,7 @@
 
     - name: Fetch file from monitoring server to Ansible control machine
       ansible.builtin.fetch:
-        src: prometheus.service 
+        src: /var/lib/jenkins/workspace/hrapp/jenkins/hr-management/base_infrastructure/prometheus.service 
         dest: /home/ubuntu/prometheus.service 
         
 
