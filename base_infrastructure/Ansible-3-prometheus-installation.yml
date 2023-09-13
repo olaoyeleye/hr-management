@@ -47,9 +47,14 @@
         remote_src: yes
 
 
-    - name: list all content of pwd
+    - name: list all content of /prometheus-2.32.1.linux-amd64
       command: ls -ltr /prometheus-2.32.1.linux-amd64
 
+    - name: List users
+      command: getent passwd
+      register: users_list
+    - debug:
+        var: users_list.stdout_lines
 
     - name: Change directory into prometheus
       command: chdir= /prometheus-2.32.1.linux-amd64
