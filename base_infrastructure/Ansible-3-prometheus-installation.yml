@@ -73,12 +73,12 @@
       command: mv prometheus promtool /usr/local/bin/
 
     - name: move consoles and console_libraries folders into /etc/prometheus
-      command: "mv consoles/ console_libraries/ /etc/prometheus/"
+      command: "mv consoles console_libraries /etc/prometheus/"
      
 
     
     - name: move prometheus.yml file into /etc/prometheus
-      command: "mv consoles/ console_libraries/ /etc/prometheus/"
+      command: "mv consoles console_libraries /etc/prometheus/"
  
 
 
