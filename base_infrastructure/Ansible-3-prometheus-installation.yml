@@ -74,6 +74,10 @@
     - name: list all content of pwd
       command: ls -ltr 
 
+      
+    - name: list all content of pwd
+      command: ls -ltr /
+
 
     - name: move prometheus folder and promtool folders into usr/local/bin 
       command: mv /prometheus-2.32.1.linux-amd64/prometheus /prometheus-2.32.1.linux-amd64/promtool /usr/local/bin/
@@ -89,26 +93,26 @@
       ignore_errors: yes 
 
 
-    - name: Change ownership of /etc/prometheu and /data folders to prometheus user
-      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/"
-      ignore_errors: yes 
-
-    - name: list content of pwd
-      command: sudo ls
-
-    - name: prometheus version
-      command: prometheus --version
-
-
-
     - name: clone my git repo
       get_url:
         url: "https://github.com/olaoyeleye/hr-management.git"
         dest: "~/"
 
-    - name: Pause for 0.20 minutes to finish downloading
+
+    - name: Pause for 1 minutes to finish downloading
       ansible.builtin.pause:
-        minutes: 0.20
+        minutes: 1
+
+    - name: Change ownership of /etc/prometheu and /data folders to prometheus user
+      command: "chown -R prometheus:prometheus /etc/prometheus/ /data/ ~/hr-management"
+  
+
+    - name: list content of ~/hr-management
+      command: sudo ~/hr-management
+
+    - name: prometheus version
+      command: prometheus --version
+
 
 
     #- name: Change ownership recursively
@@ -119,7 +123,7 @@
     #    recurse: yes
     #  become: yes
 
-    - name: list all content of / 
+    - name: list all content of ~/ 
       command: ls -ltr ~/
 
       
