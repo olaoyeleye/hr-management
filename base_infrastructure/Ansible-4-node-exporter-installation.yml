@@ -1,5 +1,5 @@
 ---
-- hosts: zeus
+- hosts: all_servers
   become: yes
   #become_user: root
   become_method: sudo
