@@ -16,14 +16,14 @@
 
     - name: Download alertmanager
       ansible.builtin.get_url:
-        url: "https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.linux-amd64.tar.gz"
-        #url: alertmanager-0.24.0.linux-amd64  https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
+        #url: "https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.linux-amd64.tar.gz"
+        url: https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
         dest: /
       become: yes
 
     - name: Extract Alertmanager
       ansible.builtin.unarchive:
-        src: /alertmanager-0.23.0.linux-amd64
+        src: /alertmanager-0.24.0.linux-amd64   #/alertmanager-0.23.0.linux-amd64
         dest: /
         remote_src: yes
 
@@ -45,14 +45,14 @@
         src: alertmanager.service
         dest: /etc/systemd/system/alertmanager.service
      
-    - name: Fetch file from alertmanager-0.23.0.linux-amd64/alertmanager.yml to /etc/alertmanager in control machine
+    - name: Fetch file from alertmanager-0.24.0.linux-amd64/alertmanager.yml to /etc/alertmanager in control machine
       fetch:
-        src: alertmanager-0.23.0.linux-amd64/alertmanager.yml
+        src: alertmanager-0.24.0.linux-amd64/alertmanager.yml
         dest: /etc/alertmanager/alertmanager.yml
         
-    - name: Fetch file from alertmanager-0.23.0.linux-amd64 to /usr/local/bin/ in control machine
+    - name: Fetch file from alertmanager-0.24.0.linux-amd64 to /usr/local/bin/ in control machine
       fetch:
-        src: alertmanager-0.23.0.linux-amd64/alertmanager
+        src: alertmanager-0.24.0.linux-amd64/alertmanager
         dest: /usr/local/bin/alertmanager
              
     
