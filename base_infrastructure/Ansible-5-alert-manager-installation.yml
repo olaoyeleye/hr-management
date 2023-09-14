@@ -51,11 +51,6 @@
         
    
 
-    - name: Fetch file from monitoring server to Ansible control machine
-      copy:
-        src: alertmanager
-        dest: /usr/local/bin/alertmanager
-        
 
     - name: move alertmanager-0.24.0.linux-amd64 into alertmanager directory
       command: mv /alertmanager-0.24.0.linux-amd64 /opt/alertmanager
