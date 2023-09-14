@@ -3,7 +3,7 @@
   become: yes
   #become_user: root
   become_method: sudo
-- name: Install node_exporter on Ubuntu
+
   tasks:
     - name: Add node_exporter user
       user:
