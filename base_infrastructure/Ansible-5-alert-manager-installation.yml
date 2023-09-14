@@ -1,6 +1,8 @@
 ---
 - hosts: zeus
   become: yes
+  #become_user: root
+  become_method: sudo
 
   tasks:
     - name: Download Alertmanager
