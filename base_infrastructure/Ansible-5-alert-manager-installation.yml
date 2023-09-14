@@ -17,7 +17,8 @@
     - name: Download alertmanager
       ansible.builtin.get_url:
         url: "https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.linux-amd64.tar.gz"
-        dest: "/alertmanager-0.23.0.linux-amd64.tar.gz"
+        #url: alertmanager-0.24.0.linux-amd64  https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
+        dest: /
       become: yes
 
     - name: Extract Alertmanager
@@ -91,3 +92,4 @@
       systemd:
         name: alertmanager
         state: restarted
+
