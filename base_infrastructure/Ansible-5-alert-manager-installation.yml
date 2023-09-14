@@ -15,10 +15,10 @@
 
 
     - name: Download alertmanager
-      get_url:
-        url: wget https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.linux-amd64.tar.gz
-        dest: /
-        mode: 0755
+      ansible.builtin.shell:
+        cmd: "wget https://github.com/prometheus/alertmanager/releases/download/v0.23.0/alertmanager-0.23.0.linux-amd64.tar.gz -O /path/to/save/alertmanager-0.23.0.linux-amd64.tar.gz"
+      become: yes
+
 
     - name: Extract Alertmanager
       ansible.builtin.unarchive:
