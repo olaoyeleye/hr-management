@@ -49,7 +49,20 @@
         src: alertmanager.yml
         dest: /etc/alertmanager/alertmanager.yml
         
-   
+       
+    - name: Fetch file from monitoring server to Ansible control machine
+      copy:
+        src: batch-job-rules.yml
+        dest: /etc/prometheus/batch-job-rules.yml
+        
+
+               
+    - name: Fetch file from monitoring server to Ansible control machine
+      copy:
+        src: dead-mans-snitch-rule.yml
+        dest: /etc/prometheus/dead-mans-snitch-rule.yml
+
+
 
     - name: alertmanager version
       command: alertmanager --version

@@ -1,4 +1,13 @@
 ---
-  - job_name: node_export
-    static_configs:
-      - targets: ["localhost:80"]
+#  - job_name: node_export
+ #   static_configs:
+ #     - targets: ["localhost:80"]
+#...
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - localhost:9093
+rule_files:
+  - dead-mans-snitch-rule.yml
+  - batch-job-rules.yml
