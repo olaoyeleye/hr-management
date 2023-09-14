@@ -16,11 +16,6 @@
       command: usermod -aG docker node_exporter
 
 
-    - name: Restart Node Exporter
-      systemd:
-        name: node_exporter
-        state: restarted
-
 
 
     - name: Download a file
