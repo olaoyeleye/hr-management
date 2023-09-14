@@ -51,13 +51,6 @@
         
    
 
-
-    - name: move alertmanager-0.24.0.linux-amd64 into alertmanager directory
-      command: mv /alertmanager-0.24.0.linux-amd64 /opt/alertmanager
-   
-    - name: Rename Alertmanager directory
-      command: mv /alertmanager-0.24.0.linux-amd64 /opt/alertmanager
-
     - name: alertmanager version
       command: alertmanager --version
 
