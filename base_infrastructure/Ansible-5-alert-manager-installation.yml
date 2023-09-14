@@ -46,35 +46,40 @@
         mode: '0755'
 
 
-    - name: alertmanager version
+    - name: ls /alertmanager-0.24.0.linux-amd64
       command: ls /alertmanager-0.24.0.linux-amd64
 
-    - name: alertmanager version
+    - name: ls /
       command: ls /
-
-    - name: Fetch file from monitoring server to Ansible control machine
+    
+    - name: copy file from monitoring server to Ansible control machine
       copy:
         src: alertmanager.service
-        dest: /etc/systemd/system/alertmanager.service
-     
-    - name: Fetch file from alertmanager-0.24.0.linux-amd64/alertmanager.yml to /etc/alertmanager in control machine
-      copy:
-        src: alertmanager.yml
-        dest: /etc/alertmanager/alertmanager.yml
-        remote_src: yes
-
+        dest: /home/ubuntu/alertmanager.service
         
-    - name: Fetch file from alertmanager-0.24.0.linux-amd64 to /usr/local/bin/ in control machine
-      fetch:
-        src: alertmanager-0.24.0.linux-amd64/alertmanager
-        dest: /usr/local/bin/alertmanager
-        remote_src: yes    
-    
-    - name: Fetch file from monitoring server to Ansible control machine
+
+    - name: move alertmanager.service into /etc/systemd/system/
+      command: "mv /home/ubuntu/alertmanager.service /etc/systemd/system/alertmanager.service"
+       
+
+    - name: move alealertmanager.yml into /etc/alertmanager/
+      command: "mv /alertmanager-0.24.0.linux-amd64/alertmanager.yml /etc/alertmanager/alertmanager.yml"
+       
+
+    - name: move alealertmanager into /usr/local/bin/a
+      command: "mv /alertmanager-0.24.0.linux-amd64/alertmanager /usr/local/bin/alertmanager"
+            
+    - name: copy /batch-job-rules.yml file from monitoring server to Ansible control machine
       copy:
         src: batch-job-rules.yml
-        dest: /etc/prometheus/batch-job-rules.yml
+        dest: /home/ubuntu/batch-job-rules.yml
         
+
+    - name: move /batch-job-rules.yml into /etc/systemd/system/
+      command: "mv /home/ubuntu/batch-job-rules.yml /etc/prometheus/batch-job-rules.yml"
+       
+
+       
 
                
     - name: Fetch file from monitoring server to Ansible control machine
