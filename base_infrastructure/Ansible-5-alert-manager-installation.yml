@@ -5,37 +5,67 @@
   become_method: sudo
 
   tasks:
-    - name: Download Alertmanager
+    - name: Add alertmanager user
+      user:
+        name: alertmanager
+        system: yes
+        createhome: no
+        shell: /bin/false
+  
+
+
+    - name: Download alertmanager
       get_url:
         url: https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz
-        dest: /tmp/alertmanager-0.24.0.linux-amd64.tar.gz
+        dest: /
         mode: 0755
 
     - name: Extract Alertmanager
       ansible.builtin.unarchive:
-        src: /tmp/alertmanager-0.24.0.linux-amd64.tar.gz
-        dest: /opt
+        src: /alertmanager-0.24.0.linux-amd64.tar.gz
+        dest: /
         remote_src: yes
-    - name: Create Alertmanager configuration directory
+
+    - name: Create alertmanager configuration directory
       file:
         path: /etc/alertmanager
         state: directory
         mode: '0755'
 
+    - name: Create alertmanager-data configuration directory
+      file:
+        path: /alertmanager-data
+        state: directory
+        mode: '0755'
 
-    - name: Rename Alertmanager directory
-      command: mv /opt/alertmanager-0.24.0.linux-amd64 /opt/alertmanager
+
+    - name: Fetch file from monitoring server to Ansible control machine
+      copy:
+        src: alertmanager.service
+        dest: /etc/systemd/system/alertmanager.service
+     
+    - name: Fetch file from monitoring server to Ansible control machine
+      copy:
+        src: alertmanager.yml
+        dest: /etc/alertmanager/alertmanager.yml
+        
    
 
-
-
-    - name: Copy Alertmanager configuration file
+    - name: Fetch file from monitoring server to Ansible control machine
       copy:
-        src: /opt/alertmanager/alertmanager.yml
-        dest: /etc/alertmanager/alertmanager.yml
-        owner: prometheus
-        group: prometheus
-        mode: '0644'
+        src: alertmanager
+        dest: /usr/local/bin/alertmanager
+        
+
+    - name: move alertmanager-0.24.0.linux-amd64 into alertmanager directory
+      command: mv /alertmanager-0.24.0.linux-amd64 /opt/alertmanager
+   
+    - name: Rename Alertmanager directory
+      command: mv /alertmanager-0.24.0.linux-amd64 /opt/alertmanager
+
+    - name: alertmanager version
+      command: alertmanager --version
+
 
     - name: Create Alertmanager systemd service
       systemd:
