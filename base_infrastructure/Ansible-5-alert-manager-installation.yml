@@ -103,7 +103,7 @@
         daemon_reload: yes
       notify: Restart Alertmanager
 
- # handlers:
+  handlers:
     - name: Restart Alertmanager
       systemd:
         name: alertmanager
