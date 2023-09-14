@@ -1,6 +1,5 @@
 ---
-- name: Configure Alertmanager on Ubuntu
-  hosts: zeus
+- hosts: zeus
   become: yes
 
   tasks:
@@ -20,11 +19,11 @@
       command: mv /opt/alertmanager-0.24.0.linux-amd64 /opt/alertmanager
       creates: /opt/alertmanager
 
-    - name: Create Alertmanager configuration directory
-      file:
-        path: /etc/alertmanager
-        state: directory
-        mode: '0755'
+    #- name: Create Alertmanager configuration directory
+    #  file:
+    #    path: /etc/alertmanager
+    #    state: directory
+    #    mode: '0755'
 
     - name: Copy Alertmanager configuration file
       copy:

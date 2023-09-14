@@ -1,4 +1,4 @@
 ---
   - job_name: node_export
     static_configs:
-      - targets: ["hrapp:80"]
+      - targets: ["localhost:80"]

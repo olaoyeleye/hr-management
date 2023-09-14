@@ -34,10 +34,13 @@
 
     - name: enable grafana
       command: sudo systemctl enable grafana-server
-   
-    - name: move datasources.yml file into /etc/grafana/provisioning/datasource/datasources.yaml
-      command: sudo mv /datasources.yml /etc/grafana/provisioning/datasources/datasources.yaml
+  
+    - name: copy file from monitoring server to Ansible control machine
+      copy:
+        src: datasources.yml 
+        dest: /etc/grafana/provisioning/datasources/datasources.yml 
         
+
 
     - name: enable grafana
       command: sudo systemctl restart grafana-server
