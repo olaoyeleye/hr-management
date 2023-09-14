@@ -58,10 +58,12 @@
         dest: /etc/systemd/system/alertmanager.service
      
     - name: Fetch file from alertmanager-0.24.0.linux-amd64/alertmanager.yml to /etc/alertmanager in control machine
-      fetch:
+      copy:
         src: alertmanager.yml
         dest: /etc/alertmanager/alertmanager.yml
         remote_src: yes
+
+        
     - name: Fetch file from alertmanager-0.24.0.linux-amd64 to /usr/local/bin/ in control machine
       fetch:
         src: alertmanager-0.24.0.linux-amd64/alertmanager
