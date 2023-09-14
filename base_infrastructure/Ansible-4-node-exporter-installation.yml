@@ -36,8 +36,7 @@
         remote_src: yes
 
     - name: move node_exporter folder  into usr/local/bin  
-      ansible.builtin.sudo:
-        cmd: "mv /node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/"
+      command: "mv /node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/"
    
 
 
