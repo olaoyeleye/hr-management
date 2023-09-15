@@ -12,6 +12,10 @@
 [db]
 10.0.5.4
 
+[app_db:children]
+db
+hrapp
+
 
 [all_servers:children]
 db
