@@ -13,6 +13,7 @@ receivers:
 - name: 'web.hook'
   webhook_configs:
   - url: 'http://127.0.0.1:5001/'
+
 - name: slack-notifications
   slack_configs:
   - channel: "#alerts"
@@ -20,6 +21,7 @@ receivers:
     api_url: "https://hooks.slack.com/services/<id>"
     title: "{{ .GroupLabels.alertname }}"
     text: "{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}"
+    
 inhibit_rules:
   - source_match:
       severity: 'critical'

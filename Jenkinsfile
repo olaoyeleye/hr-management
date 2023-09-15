@@ -22,6 +22,7 @@ pipeline {
             steps {
                 echo "This is stage 1, where we download base_infrastructure from git"
                 sh '''
+                   pwd
                    mkdir jenkins
                    cd jenkins
                    git clone https://github.com/olaoyeleye/hr-management.git
@@ -35,7 +36,7 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                  # terraform init --backend-config=../env/dev/backend.tfvars           
+                   terraform init --backend-config=../env/dev/backend.tfvars           
                   
                    '''
             }
@@ -47,7 +48,9 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                   #terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+                 terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+
+            #      terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
                   
                    '''
             }
@@ -71,7 +74,7 @@ pipeline {
                    cd hr-management
                    cd hrapp
 
-                   docker build -t hrapp .           
+           #        docker build -t hrapp .           
                   
                    '''
             }
@@ -80,7 +83,7 @@ pipeline {
             steps {
                 echo "This is stage 6, where i log in into dockerhub account"
                 sh '''
-                docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
+         #     docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
                    '''
             }
         }
@@ -92,7 +95,7 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd hrapp
-                   docker tag hrapp japostina/hrapp          
+         #         docker tag hrapp japostina/hrapp          
                   
                    '''
             }
@@ -104,7 +107,7 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd hrapp
-                   docker push japostina/hrapp:v1         
+           #        docker push japostina/hrapp:v1         
                   
                    '''
             }
@@ -125,7 +128,7 @@ pipeline {
                   cd base_infrastructure
 
                   ls -ltr $hr_app_key
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-installation.yml -u ubuntu
+            #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-2-docker-installation.yml -u ubuntu 
                    '''
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
@@ -140,8 +143,8 @@ pipeline {
                   cd hr-management
                   cd base_infrastructure
                   ls -ltr
-                  echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
-                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key docker-from-scratch.yml  --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+                # echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
+             #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu 
 
                    '''
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
@@ -149,6 +152,66 @@ pipeline {
 
         
         
+        }
+    }
+        stage ("stage 11 - Ansible to install prometheus on zeus"){
+            steps {
+                echo "This is stage 11, where we prometheus is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+                  ls -ltr
+         
+        #      ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-3-prometheus-installation.yml -vvvv
+
+                   '''
+                
+        }
+    }
+        stage ("stage 12 - Ansible to install node exporter on zeus"){
+            steps {
+                echo "This is stage 12, where we node exporter is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+                  ls -ltr
+         
+          #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-4-node-exporter-installation.yml
+
+                   '''
+                
+        }
+    }
+        stage ("stage 13 - Ansible to install alert manager on zeus"){
+            steps {
+                echo "This is stage 13, where we alert namanger is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+                  ls -ltr
+         
+              ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-5-alert-manager-installation.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+
+                   '''
+                
+        }
+    }
+        stage ("stage 14 - Ansible to install grafana on zeus"){
+            steps {
+                echo "This is stage 14, where we grafana is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+                  ls -ltr
+         
+              ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key grafana-installation.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+
+                   '''
+                
         }
     }
     }
@@ -166,6 +229,7 @@ pipeline {
     }
     
 }
+      
       
       
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant

@@ -6,3 +6,20 @@ datasources:
     type: prometheus
     url: http://zeus:9090
     isDefault: true
+
+
+datasources:
+  - name: Hrapp 1
+    type: prometheus
+    url: http://52.31.179.14:9090
+    isDefault: false
+
+  - name: Hrapp 2
+    type: prometheus
+    url: http://54.194.40.22:9090
+    isDefault: false
+
+  - name: Hrapp 3
+    type: prometheus
+    url: http://node3:9090
+    isDefault: false
