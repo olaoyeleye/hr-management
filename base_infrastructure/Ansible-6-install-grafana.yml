@@ -1,0 +1,26 @@
+---
+- name: Configure grafana on Ubuntu
+  hosts: zeus
+  become: yes
+
+  tasks: 
+   
+    - name: Installing grafana, Update and upgrade zeus machine (monitoring machine)
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - grafana
+        - update
+        
+        
+    - name: enable grafana
+      command: sudo systemctl enable grafana
+      
+    - name: Start grafana Service
+      systemd:
+        name: grafana
+        state: started
+        enabled: yes
+
