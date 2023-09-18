@@ -1,0 +1,39 @@
+---
+- hosts: hrapp
+  become: yes
+  #become_user: root
+  become_method: sudo
+
+  tasks:
+    - name: Add node_exporter user
+      user:
+        name: node_exporter
+        system: yes
+        createhome: no
+        shell: /bin/false
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker node_exporter
+ 
+   
+    - name: Installing node_exporter, Update and upgrade hrapp machine (monitoring machine)
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - prometheus-node-exporter
+        - update
+        
+        
+    - name: enable node-exporter 
+      command: sudo systemctl enable node-exporter
+
+    - name: Start node-exporter Service
+      systemd:
+        name: node-exporter
+        state: started
+        enabled: yes
+
+
+ 

@@ -6,3 +6,9 @@ ansible_variables.yml
 .terraform.lock.hcl
 *.hcl
 git rm --cached *
+ 
+
+Ansible-3-prometheus-installation.yml
+Ansible-4-node-exporter-installation.yml
+Ansible-5-alert-manager-installation.yml
+

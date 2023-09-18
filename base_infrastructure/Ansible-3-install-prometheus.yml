@@ -1,0 +1,38 @@
+---
+- hosts: zeus
+  become: yes
+  #become_user: root
+  become_method: sudo
+
+  tasks:
+    - name: Add prometheus user
+      user:
+        name: prometheus
+        system: yes
+        createhome: no
+        shell: /bin/false
+  
+    - name: Add docker user to a super user
+      command: usermod -aG docker prometheus
+
+    - name: Installing prometheus, Update and upgrade zeus machine (monitoring machine)
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - prometheus
+        - update
+        - upgrade
+         
+#importanat folders 
+
+    - name: enable prometheus 
+      command: sudo systemctl enable prometheus
+
+    - name: Start Prometheus Service
+      systemd:
+        name: prometheus
+        state: started
+        enabled: yes
+
