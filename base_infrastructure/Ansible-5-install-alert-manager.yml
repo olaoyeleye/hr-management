@@ -23,11 +23,11 @@
         state: latest
         update_cache: yes
       loop:
-        - alertmanager
+        - prometheus-alertmanager
         
         
     - name: enable alertmanager
-      command: sudo systemctl restart alertmanager
+      command: sudo systemctl prometheus-restart alertmanager
 
 
         
