@@ -27,13 +27,8 @@
         
         
     - name: enable alertmanager
-      command: sudo systemctl enable alertmanager
+      command: sudo systemctl restart alertmanager
 
-    - name: Start alertmanager Service
-      systemd:
-        name: alertmanager
-        state: started
-        enabled: yes
 
         
 

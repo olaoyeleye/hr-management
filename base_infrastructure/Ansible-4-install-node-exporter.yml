@@ -25,7 +25,12 @@
         - prometheus-node-exporter
 
         
+          
         
+    - name: enable node-exporter
+      command: sudo systemctl restart node-exporter
+
+   
    # - name: Start node-exporter Service
    #   systemd:
    #     name: node-exporter
