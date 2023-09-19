@@ -23,8 +23,8 @@
       loop:
         - prometheus
         - nginx
-        - update
-        - upgrade
+        
+      
          
 #importanat folders 
 
