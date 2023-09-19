@@ -12,7 +12,7 @@
         update_cache: yes
       loop:
         - grafana
-        - update
+        
         
         
     - name: enable grafana

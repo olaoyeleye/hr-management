@@ -24,15 +24,24 @@
         update_cache: yes
       loop:
         - alertmanager
-        - update
+        - grafana
         
         
     - name: enable alertmanager
       command: sudo systemctl enable alertmanager
-      
+
     - name: Start alertmanager Service
       systemd:
         name: alertmanager
         state: started
         enabled: yes
 
+        
+    - name: enable grafana
+      command: sudo systemctl enable grafana
+      
+    - name: Start grafana Service
+      systemd:
+        name: grafana
+        state: started
+        enabled: yes

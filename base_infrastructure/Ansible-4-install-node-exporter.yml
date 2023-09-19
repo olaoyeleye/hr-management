@@ -23,7 +23,7 @@
         update_cache: yes
       loop:
         - prometheus-node-exporter
-        - update
+
         
         
     - name: enable node-exporter 
