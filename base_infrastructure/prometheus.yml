@@ -24,9 +24,9 @@ scrape_configs:
 #      - targets: ["events:9090"] 
   - job_name: hrapp 
     static_configs: 
-      - targets: ["52.31.179.14:9090"] 
-      - targets: ["54.194.40.22:9090"] 
-      - targets: ["34.243.248.20:9090"] 
+      - targets: ["54.76.151.246:9090"] 
+      - targets: ["3.248.170.234:9090"] 
+      - targets: ["52.50.187.208:9090"] 
 
       
 

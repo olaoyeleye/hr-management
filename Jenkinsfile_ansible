@@ -18,7 +18,17 @@ pipeline {
 //docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW
     stages {
        
-
+        stage ("stage 0 - download terraform code from GIT"){
+            steps {
+                echo "This is stage 0, where we download base_infrastructure from git"
+                sh '''
+                   pwd
+                   mkdir jenkins
+                   cd jenkins
+                   git clone https://github.com/olaoyeleye/hr-management.git
+                   '''
+            }
+        }
         stage ("stage 1 - Ansible to install dorcker on hr-app nodes"){
             steps {
                 echo "This is stage 1, install dorcker on all the target nodes"
