@@ -27,7 +27,7 @@
         
         
     - name: enable alertmanager
-      command: sudo systemctl prometheus-restart alertmanager
+      command: sudo systemctl restart prometheus-alertmanager
 
 
         
