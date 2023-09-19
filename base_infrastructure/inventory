@@ -1,16 +1,16 @@
 
 [hrapp]
-54.217.151.31
-3.249.107.190
-54.246.150.190
+54.76.151.246
+3.248.170.234
+52.50.187.208
 
 ## this is where i will be installing promethius and grafana
 [zeus]
-54.229.148.199
+54.195.176.72
 
 ## this is where i am installing postgresDB
 [db]
-10.0.5.93
+10.0.5.247
 
 [app_db:children]
 db

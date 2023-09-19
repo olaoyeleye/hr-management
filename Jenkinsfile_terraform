@@ -48,9 +48,9 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                   terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+               #         terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
 
-           #    terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+          terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
                   
                    '''
             }
