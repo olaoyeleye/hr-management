@@ -1,0 +1,132 @@
+pipeline {
+    agent any
+    environment {
+        AWS_ACCESS_KEY_ID=credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY=credentials('AWS_SECRET_ACCESS_KEY')
+        DOCKERHUB_CREDENTIALS_USER=credentials('USER')
+        DOCKERHUB_CREDENTIALS_PSW=credentials('PASSWORD')
+        DOCKER_REGISTRY=credentials('DOCKER_REGISTRY')
+        hr_app_key=credentials('hr-app-key')
+        hr_ansible_variables= credentials('hr_ansible_variables')
+        
+       //# POSTGRES_DATABASE_NAME= credentials('POSTGRES_DATABASE_NAME')
+       //# POSTGRES_PASSWORD= credentials('POSTGRES_PASSWORD')
+       
+        inventory= credentials('inventory')
+        
+    }
+//docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW
+    stages {
+       
+
+        stage ("stage 1 - Ansible to install dorcker on hr-app nodes"){
+            steps {
+                echo "This is stage 1, install dorcker on all the target nodes"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+
+                  ls -ltr $hr_app_key
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-2-docker-installation.yml -u ubuntu 
+                   '''
+                   //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
+                   //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
+                 
+            }
+        }
+        stage ("stage 2 - Ansible to run hrapp on remote nodes"){
+            steps {
+                echo "This is stage 2, where we create hrapp container"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure
+                 # echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
+                   ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu 
+
+                   '''
+                   // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
+                 // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_management_key docker-from-scratch.yml --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW-u ubuntu
+
+        
+        
+        }
+    }
+        stage ("stage 3 - Ansible to install prometheus on zeus"){
+            steps {
+                echo "This is stage 3, where prometheus is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure  
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-3-install-prometheus.yml -vvvv
+
+                   '''
+                
+        }
+    }
+        stage ("stage 4 - Ansible to install node exporter on zeus"){
+            steps {
+                echo "This is stage 4, where node exporter is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure 
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-4-install-node-exporter.yml -vvvv
+
+                   '''
+                
+        }
+    }
+        stage ("stage 5 - Ansible to install alert manager on zeus"){
+            steps {
+                echo "This is stage 5, where alert namanger is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure 
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-5-install-alert-manager.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+
+                   '''
+                
+        }
+    }
+        stage ("stage 6 - Ansible to install grafana on zeus"){
+            steps {
+                echo "This is stage 164, where grafana is installed on zeus"
+                sh '''
+                  cd jenkins
+                  cd hr-management
+                  cd base_infrastructure 
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-6-install-grafana.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+
+                   '''
+                
+        }
+    }
+    }
+    post {
+        always {
+            echo 'Job done'
+            deleteDir()
+        }
+        success {
+            echo 'Build is successful'
+        }
+        failure {
+            echo 'This has failed'
+        }
+    }
+    
+}
+      
+      
+                   // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
+                                      echo -n $AWS_SECRET_ACCESS_KEY | base64 > tmpp
+                  //  cat tmpp
+                   // echo -n  $AWS_ACCESS_KEY_ID | base64 > tmpp2
+                   // cat tmpp2
+                    
+                  //cat $inventory
+     
