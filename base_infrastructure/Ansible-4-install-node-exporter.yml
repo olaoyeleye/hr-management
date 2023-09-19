@@ -26,11 +26,11 @@
 
         
         
-    - name: Start node-exporter Service
-      systemd:
-        name: node-exporter
-        state: started
-        enabled: yes
+   # - name: Start node-exporter Service
+   #   systemd:
+   #     name: node-exporter
+   #     state: started
+   #     enabled: yes
 
 
  
