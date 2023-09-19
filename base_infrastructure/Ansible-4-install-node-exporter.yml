@@ -26,9 +26,6 @@
 
         
         
-    - name: enable node-exporter 
-      command: sudo systemctl enable node-exporter
-
     - name: Start node-exporter Service
       systemd:
         name: node-exporter
