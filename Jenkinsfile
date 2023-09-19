@@ -48,9 +48,9 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd base_infrastructure
-                 terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+                   terraform destroy --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
 
-            #      terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
+           #    terraform apply --var-file ../env/dev/backend.tfvars --var-file ../env/dev/ec2.tfvars   --auto-approve        
                   
                    '''
             }
@@ -61,7 +61,7 @@ pipeline {
                 sh '''
                    cd jenkins
                    cd hr-management 
-                   git clone https://github.com/techbleat/hrapp           
+                  git clone https://github.com/techbleat/hrapp           
                   
                    '''
             }
@@ -74,7 +74,7 @@ pipeline {
                    cd hr-management
                    cd hrapp
 
-           #        docker build -t hrapp .           
+                  docker build -t hrapp .           
                   
                    '''
             }
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 echo "This is stage 6, where i log in into dockerhub account"
                 sh '''
-         #     docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
+                docker login -u $DOCKERHUB_CREDENTIALS_USER -p $DOCKERHUB_CREDENTIALS_PSW 
                    '''
             }
         }
@@ -95,7 +95,7 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd hrapp
-         #         docker tag hrapp japostina/hrapp          
+                   docker tag hrapp japostina/hrapp          
                   
                    '''
             }
@@ -107,7 +107,7 @@ pipeline {
                    cd jenkins
                    cd hr-management
                    cd hrapp
-           #        docker push japostina/hrapp:v1         
+                   docker push japostina/hrapp:v1         
                   
                    '''
             }
@@ -128,7 +128,7 @@ pipeline {
                   cd base_infrastructure
 
                   ls -ltr $hr_app_key
-            #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-2-docker-installation.yml -u ubuntu 
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-2-docker-installation.yml -u ubuntu 
                    '''
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
                    //ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file hr-management-key.pem docker-from-scratch.yml -u vagrant
@@ -143,8 +143,8 @@ pipeline {
                   cd hr-management
                   cd base_infrastructure
                   ls -ltr
-                # echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
-             #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu 
+                 # echo ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY --extra-var @username=$DOCKERHUB_CREDENTIALS_USER --extra-var @password=$DOCKERHUB_CREDENTIALS_PSW -u ubuntu
+                   ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-1-docker-from-scratch.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu 
 
                    '''
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
@@ -163,7 +163,7 @@ pipeline {
                   cd base_infrastructure
                   ls -ltr
          
-        #      ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-3-prometheus-installation.yml -vvvv
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-3-install-prometheus.yml -vvvv
 
                    '''
                 
@@ -178,7 +178,7 @@ pipeline {
                   cd base_infrastructure
                   ls -ltr
          
-          #    ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-4-node-exporter-installation.yml
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key  -u ubuntu Ansible-4-install-node-exporter.yml -vvvv
 
                    '''
                 
@@ -193,7 +193,7 @@ pipeline {
                   cd base_infrastructure
                   ls -ltr
          
-              ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-5-alert-manager-installation.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-5-install-alert-manager.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
 
                    '''
                 
@@ -208,7 +208,7 @@ pipeline {
                   cd base_infrastructure
                   ls -ltr
          
-              ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key grafana-installation.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
+                  ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --key-file $hr_app_key Ansible-6-install-grafana.yml --extra-var AWS_KEY_NAME=$AWS_ACCESS_KEY_ID --extra-var AWS_ACCESS_NAME=$AWS_SECRET_ACCESS_KEY -u ubuntu -vvv
 
                    '''
                 
@@ -229,7 +229,6 @@ pipeline {
     }
     
 }
-      
       
       
                    // ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i /repository/project/my_hrapp/hr-management/base_infrastructure/inventory --key-file /repository/project/my_hrapp/hr-management/base_infrastructure/hr-management-key.pem /repository/project/my_hrapp/hr-management/base_infrastructure/docker-from-scratch.yml -u vagrant
