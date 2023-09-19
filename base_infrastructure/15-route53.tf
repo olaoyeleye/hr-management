@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "hrapp-route53" {
-  name = "kensko-hr-management-app.link"
+  name = "kensko-hr-management.link"
     vpc {
     vpc_id = aws_vpc.hr-app-vpc.id
   }
