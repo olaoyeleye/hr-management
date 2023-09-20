@@ -47,8 +47,7 @@ resource "aws_route53_record" "hrapp-ns-4" {
 
 
 resource "aws_route53_health_check" "hrapp-health-check" {
-  zone_id           =var.zone_id
-  #fqdn              = "kensko-hr-management.link"
+  fqdn              = "www.kensko-hr-management.link"
   port              = 80
   type              = "HTTP"
   resource_path     = "/"
