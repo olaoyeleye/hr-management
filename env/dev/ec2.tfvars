@@ -40,3 +40,5 @@ default_tags = {
 
 domain = "olakunleoyeleye123@gmail.com"
 #hosted_zone_domain="KENSKO-HR-APPLICATION.COM"
+
+zone_id ="Z0187839IXELZJ688J1R"

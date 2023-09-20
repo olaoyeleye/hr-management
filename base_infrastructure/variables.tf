@@ -29,6 +29,10 @@ variable "hr-app-name-5" {}
 variable "hr-app-jump-server" {}
 
 
+variable "zone_id" {}
+
+
+
 
 #Fundamental and neccessary parameters to supply
 variable "default_tags" {}

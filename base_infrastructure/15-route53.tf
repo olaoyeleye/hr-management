@@ -11,11 +11,8 @@
 
 
 
-
-
-
 resource "aws_route53_record" "hrapp-ns-1" {
-  zone_id = 
+  zone_id = var.zone_id
   name    = "hrapp-1"
   type    = "A"
   ttl     = "300"
@@ -23,7 +20,7 @@ resource "aws_route53_record" "hrapp-ns-1" {
 }
 
 resource "aws_route53_record" "hrapp-ns-2" {
-  zone_id = 
+  zone_id = var.zone_id
   name    = "hrapp-2"
   type    = "A"
   ttl     = "300"
@@ -31,7 +28,7 @@ resource "aws_route53_record" "hrapp-ns-2" {
 }
 
 resource "aws_route53_record" "hrapp-ns-3" {
-  zone_id = 
+  zone_id = var.zone_id
   name    = "hrapp-3"
   type    = "A"
   ttl     = "300"
@@ -39,7 +36,7 @@ resource "aws_route53_record" "hrapp-ns-3" {
 }
 
 resource "aws_route53_record" "hrapp-ns-4" {
-  zone_id =
+  zone_id =var.zone_id
   name    = "prometheus"
   type    = "A"
   ttl     = "300"
@@ -50,7 +47,8 @@ resource "aws_route53_record" "hrapp-ns-4" {
 
 
 resource "aws_route53_health_check" "hrapp-health-check" {
-  fqdn              = "kensko-hr-management.link"
+  zone_id           =var.zone_id
+  #fqdn              = "kensko-hr-management.link"
   port              = 80
   type              = "HTTP"
   resource_path     = "/"
@@ -64,6 +62,6 @@ resource "aws_route53_health_check" "hrapp-health-check" {
 
 
 #resource "aws_route53_zone_association" "hrapp-zone-association" {
-#  zone_id = aws_route53_zone.hrapp-route53.zone_id
+#  zone_id = var.zone_id
 #  vpc_id  = aws_vpc.hr-app-vpc.id
 #}
