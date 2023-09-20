@@ -1,0 +1,12 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name prometheus.kensko-hr-management.link;
+
+    location / {
+      proxy_pass http://localhost:9090/;
+    }
+
+}
+       
